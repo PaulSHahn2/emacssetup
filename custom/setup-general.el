@@ -104,4 +104,9 @@
   (window-numbering-mode t)
   )
 
+;; icon support
+(use-package all-the-icons)
+(use-package all-the-icons-completion)
+(add-hook  'dired-mode-hook `all-the-icons-dired-mode)
+
 (provide 'setup-general)

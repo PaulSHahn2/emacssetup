@@ -10,9 +10,11 @@
   :ensure t
   :init(setenv "WORKON_HOME" "~/python_venvs/"))
 
+(require `dap-python)
+
 ;; Open Bazel config files in python mode
-(add-to-list 'auto-mode-alist '("WORKSPACE" . python-mode))
-(add-to-list 'auto-mode-alist '("BUILD" . python-mode))
+;; (add-to-list 'auto-mode-alist '("WORKSPACE" . python-mode))
+;; (add-to-list 'auto-mode-alist '("BUILD" . python-mode))
 
 ;; uncomment all below this line to enable eply
 ;; instead of lsp-mode with python-lsp-server

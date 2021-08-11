@@ -10,3 +10,8 @@ transient
 custom/bazel-mode.el
 .lsp-session-v1
 projectile.cache
+.cache
+ede-projects.el
+eln-cache
+projects
+tramp

@@ -191,5 +191,4 @@
   (local-set-key (kbd "C-c f") 'lsp-format-region)
   )
 
-
 (provide 'setup-editing)
