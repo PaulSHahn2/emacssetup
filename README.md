@@ -1259,8 +1259,8 @@ Here are the macros I have programmed into my keyboard and what they do:
 | *kp-LCtrl-f* | helm-gtags-find-files | |
 | *kp-LCtrl-d* | helm-gtags-show-stack | |
 | *kp-w* |  helm-man-woman, view man pages | C-c h m |
-| **sr-speedbar** |    |    |
-| *kp-q* | sr-speedbar-toggle |  |
+| **dired-sidebar** |    |    |
+| *kp-q* | dired-sidebar-toggle-sidebar |  |
 
 ## Raw keybindings
 
@@ -1302,5 +1302,5 @@ manual to see how to do this).
 {kp-lctrl}{kp-f}>{-lalt}{x}{+lalt}{d125}{h}{e}{l}{m}{hyphen}{g}{t}{a}{g}{s}{hyphen}{f}{i}{n}{d}{hyphen}{f}{i}{l}{e}{s}{d125}{enter}
 {kp-lctrl}{kp-d}>{-lalt}{x}{+lalt}{d125}{h}{e}{l}{m}{hyphen}{g}{t}{a}{g}{s}{hyphen}{s}{h}{o}{w}{hyphen}{s}{t}{a}{c}{k}{d125}{enter}
 {kp-w}>{-lctrl}{c}{+lctrl}{h}{m}
-{kp-q}>{-lalt}{x}{+lalt}{d125}{s}{r}{hyphen}{s}{p}{e}{e}{d}{b}{a}{r}{hyphen}{t}{o}{g}{g}{l}{e}{d125}{enter}
+{kp-q}>{-lalt}{x}{+lalt}{d125}{d}{i}{r}{e}{d}{hyphen}{s}{i}{d}{e}{b}{a}{r}{hyphen}{t}{o}{g}{g}{l}{e}{hyphen}{s}{i}{d}{e}{b}{a}{r}{d125}{enter}
 ```
