@@ -6,8 +6,11 @@
 (setq python-indent 4)
 (setq python-indent-offset 4)
 
+(add-hook 'python-mode-hook 'lsp-deferred)
+
 (use-package pyvenv
   :ensure t
+  :after python-mode
   :init(setenv "WORKON_HOME" "~/python_venvs/"))
 
 (require `dap-python)

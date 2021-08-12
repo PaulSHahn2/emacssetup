@@ -64,35 +64,36 @@
 ;; set appearance of a tab that is represented by 3 spaces
 (setq-default tab-width 3)
 
-;; setup GDB
-(setq
- ;; use gdb-many-windows by default
- gdb-many-windows t
-
- ;; Non-nil means display source file containing the main routine at startup
- gdb-show-main t
- )
+;; asyncronous processing
+(use-package async
+  :ensure t)
 
 ;; company
 (use-package company
   :ensure t
-  :diminish company-mode
-  :config
-  :init
-  (global-company-mode 1)
-  (delete 'company-semantic company-backends))
+  :after lsp-mode
+  :hook (prog-mode . company-mode)
+  :bind (:map company-active-map
+              ("<tab>" . company-complete-selection))
+  (:map lsp-mode-map
+        ("<tab>" . company-indent-or-complete-common))
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 1.0)
+)
 
 ;; Add icons to code completion when using the GUI client.
 (use-package company-box
   :ensure t
   :hook (company-mode . company-box-mode))
 
+(use-package company-ansible
+  :ensure t)
+
+(add-to-list 'company-backends 'company-ansible)
+
 ;; byte compile init setup for faster startup.
 (defvar my:byte-compile-init t)
-
-;; asyncronous processing
-(use-package async
-  :ensure t)
 
 ;; let the windows be numbered for easy access. meta-# key
 (use-package window-numbering
@@ -108,5 +109,13 @@
 (use-package all-the-icons)
 (use-package all-the-icons-completion)
 (add-hook  'dired-mode-hook `all-the-icons-dired-mode)
+
+;; which key
+(use-package which-key
+  :defer 0
+  :diminish which-key-mode
+  :config
+  (which-key-mode)
+  (setq which-key-idle-delay 1))
 
 (provide 'setup-general)

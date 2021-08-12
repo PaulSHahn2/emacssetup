@@ -15,3 +15,7 @@ ede-projects.el
 eln-cache
 projects
 tramp
+.dap-breakpoints
+*.log
+recentf
+var/

@@ -84,8 +84,8 @@
     (global-set-key (kbd "C-c h o") 'helm-occur)
     (global-set-key (kbd "C-c h o") 'helm-occur)
 
-    (global-set-key (kbd "C-c h w") 'helm-wikipedia-suggest)
-    (global-set-key (kbd "C-c h g") 'helm-google-suggest)
+    ;;(global-set-key (kbd "C-c h w") 'helm-wikipedia-suggest)
+    ;;(global-set-key (kbd "C-c h g") 'helm-google-suggest)
 
     (global-set-key (kbd "C-c h x") 'helm-register)
     ;; (global-set-key (kbd "C-x r j") 'jump-to-register)

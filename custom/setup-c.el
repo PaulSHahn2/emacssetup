@@ -32,13 +32,16 @@
 ;; “user”: When you want to define your own style
 (setq c-default-style "stroustrup" c-basic-offset 3)
 
+
 ;; company-c-headers
-;;(use-package company-c-headers
-;;  :init
-;;  (add-to-list 'company-backends 'company-c-headers)
-;;  (add-to-list 'company-c-headers-path-system "/usr/include/c++/9/")
+(use-package company-c-headers
+  :ensure t
+  :config
+  (add-to-list 'company-backends 'company-c-headers)
+  (add-to-list 'company-c-headers-path-system "/usr/include/")
+  (add-to-list 'company-c-headers-path-system "/opt/rh/devtoolset-10/root/usr/include/")
+  )
 ;;  (add-to-list 'company-c-headers-path-system "/usr/include/boost/")
-;;  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup a more modern cpp parser for 2014 & 2017 CPP code
@@ -132,5 +135,8 @@
 
 ;; Add support for C header files as C++ mode
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
+;; Use as C++ completer if desired. We use the clangd backend
+(add-hook 'c-mode-common-hook 'lsp-mode)
 
 (provide 'setup-c)

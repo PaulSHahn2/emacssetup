@@ -7,6 +7,8 @@
 ;; Shell Scripting Support
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(add-hook 'sh-mode-hook 'lsp-deferred)
+
 ;; default shell scripting hook width 4
 (add-hook 'sh-mode-hook (lambda()
                           (setq tab-width 3)))

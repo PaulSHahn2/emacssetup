@@ -18,7 +18,7 @@
   :after flyspell
   :bind (:map flyspell-mode-map ("C-;" . flyspell-correct-wrapper)))
 
-(use-package flyspell-correct-helm
+(use-package flyspell-correct-ivy
   :after flyspell-correct)
 
 (provide 'setup-spelling)

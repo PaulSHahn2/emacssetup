@@ -13,18 +13,20 @@
   (projectile-global-mode)
   :config
   (setq projectile-enable-caching t)
-  (setq projectile-completion-system 'helm)
+  (setq projectile-completion-system 'ivy)
   )
 
 ;; still using the old map until we reprogram the keyboard
 ;;(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
-(use-package helm-projectile
-  :init
-  (helm-projectile-on)
-  (setq projectile-completion-system 'helm)
-  (setq projectile-indexing-method 'alien))
+(use-package counsel-projectile)
+
+;;(use-package helm-projectile
+;;  :init
+;;  (helm-projectile-on)
+;;  (setq projectile-completion-system 'helm)
+;;  (setq projectile-indexing-method 'alien))
 
 ;; Make projectile aware of CPP Bazel projects.
 (projectile-register-project-type

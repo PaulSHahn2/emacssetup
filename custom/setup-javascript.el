@@ -28,6 +28,12 @@
                          "--jsx-bracket-same-line" "true"
                          "--print-width" "100"))
 
+;; typescript mode
+(use-package typescript-mode
+  :mode "\\.ts\\'"
+  :hook (typescript-mode . lsp-deferred)
+)
+
 ;; json-mode
 (use-package json-mode
   :ensure t

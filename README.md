@@ -31,16 +31,26 @@ for my specific use.
 ## emacs from scratch
 
 I would recommend that you learn *emacs* by setting it up yourself. The System
-Crafters' video series and repository serves as a good starting point:
+Crafters' video series and repository serves as a good starting point and
+provides a much more detailed configuration when finished:
 
 * <https://www.youtube.com/watch?v=74zOY-vgkyw&list=PLEoMzSkcN8oPH1au7H6B7bBJ4ZO7BXjSZ>
 
+There is a time investment required to watch the videos and starting at the
+beginning is required, or you will be lost. They manage configuration changes
+and documentation changes together, and "de-tangle" and rebuild their *emacs*
+setup on-the-fly from their documentation. This approach is the inverse of the
+typical Doxygen/JavaDoc/PyDoc-- instead of creating documentation from code
+comments, code included in-line with the comments is then stitched together from
+the documents to create your configuration. This allows the newer user to see
+the comments explaining what the *elisp* setup code is actually doing, since
+most new *emacs* users are not proficient lisp programmers.
 
 ## Pre-configured emacs distributions
 
 Your other option is to borrow/take someone else's setup, like copying this
 repository. This gets you going temporarily, but may come at the expense of you
-not knowing how to setup and customize your environment.
+not knowing how to setup and customize your environment later on.
 
 There are modified distributions of *GNU emacs* that are purpose specific and
 configured "out-of-the-box". They won't work with this setup since they provide
@@ -115,7 +125,7 @@ Below are my brief notes for building your own *GNU emacs*. You will need the so
 code to the version of *emacs* that you wish to build.
 
 
-## Building GNU emacs 27+ On Ubuntu (and similar):
+## Building GNU emacs 27+ On Debian/Ubuntu (and similar):
 
 ```bash
 # add sources repos in /etc/apt/sources.list by uncommenting srcs repositories matching the binary equivalents.
@@ -157,7 +167,8 @@ make -j
 sudo make install prefix=/usr/local
 ```
 
-Note that with this setup you will need to enable devtoolset-10 via *scl* each time you start your sessions, before you can run *emacs*.
+Note that on RHEL you will need to enable devtoolset-10 via *scl* each time you start your sessions, before you can run *emacs*. 
+I typically also start my Python virtual environment before starting the *emacs* daemon.
 
 # Repository usage
 
@@ -195,7 +206,7 @@ source repository:
     ```bash
     $ emacs
     ```
-    When you first start *emacs* after cloning, you may get errors reported in the terminal window. This is because the settings you have cloned from *git* reference packages that have not been installed yet. We will fix this in the next step by installing the missing packages.
+    When you first start *emacs* after cloning, you may get errors reported in the terminal window. This is because the settings you have cloned from *git* reference packages that have not been installed yet. Usually these are "require" statements. All newer setup uses the "use-package" directive which is a bit smarter and tries to download the package if it is missing. Regardless, we will fix this in the next step by installing the missing packages.
 
 4. List your installed packages:
 
@@ -217,9 +228,11 @@ source repository:
    by marking them with *u*. Then press *x* to download and install the latest
    version.
 
-6. When all packages are installed, you can exit *emacs* and restart it. If you are
-   running *emacs* in *daemon mode*, restart the dameon: `killall emacs` and then
-   restart. You should no longer see startup errors in the terminal.
+6. When all packages are installed, you can exit *emacs* and restart it. If you
+   are running *emacs* in *daemon mode*, you need to restart the dameon:
+   `killall emacs` and then restart. You should no longer see startup errors in
+   the terminal. You can also re-evaluate the *init.el* source file via
+   *eval-buffer*.
 
 ## Sharing your settings across machines
 
@@ -237,7 +250,7 @@ Another use is to create a branch for each operating system you use.
 
 Currently, this repository has branches for *GNU emacs-26*, *GNU emacs-27*, and
 a *windows* branch that is a fork of the *GNU emacs-27* branch. The *master*
-branch tracks the master branch of *GNU emacs* and assumes you have build from
+branch tracks the master branch of *GNU emacs* and assumes you have built from
 source with native compilation enabled.
 
 ## Windows Specific Stuff
@@ -280,7 +293,7 @@ To install in the native environment:
 Note that *emacs* can interactively change the contents of your
 *~/emacs.d/init.el* file as it saves updates you have requested. *emacs* does
 this when you use drop-down menu options to change settings or when you install
-or upgrade packages.
+or upgrade packages via *package-list-packages*.
 
 You should make sure you are done making such changes before you attempt to
 commit your changes with git. To commit changes, you can either use *git* on the
@@ -297,7 +310,6 @@ under the *custom* subdirectory. This lets us break out portions of setup code
 into bite-sized and purpose specific pieces, instead of having everything inside
 one large file.
 
-
 The following list shows the settings files and a brief description of what they
 do:
 
@@ -305,49 +317,67 @@ do:
 * **custom/setup-general.el:** Contains generic display setup. Examples of such would be: match parenthesis, don't show the tool bar, display the time, set the time zone, etc.
 * **custom/setup-editing.el:** Contains generic file editing setup that is not specific to a mode or *emacs* subsystem.
 * **custom/setup-git.el:** Contains setup information specific to *git* and *github*.
-* **custom/setup-helm.el:** Contains setup instructions specific to *helm*. Helm is an alternate incremental completion framework that replaces the default tab completion. See <https://github.com/emacs-helm/helm>, and the helm section below.
+* **custom/setup-helm.el:** Contains setup instructions specific to *helm*. Disabled by default. Helm is an alternate incremental completion framework that replaces the default tab completion. See <https://github.com/emacs-helm/helm>, and the helm section below.
+* **custom/setup-ivy-counsel.el:** Contains setup instructions specific to *ivy and counsel*. Ivy is an alternate incremental completion framework that replaces the default tab completion. See <https://github.com/abo-abo/swiper>, and the ivy section below.
 * **custom/setup-c.el:** Contains setup specific to C/C++ projects and files.
 * **custom/setup-python.el:** Contains setup specific to Python projects and files.
 * **custom/setup-javascript.el:** Contains setup specific to Javascript projects and files.
+* **custom/setup-theme.el:** Contains setup specific to the default theme selection.
 
-If you don't need a portion of this setup, simply remove the setup-{item).el
-file and remove its require statement from the *init.el* file. Then add your own
-stuff. For example, to support another language such as Go you could add file:
-*setup-go.el*.
+If you don't need a portion of this setup, simply remove the *(require
+ 'setup-{item).el)* require statement from the *init.el* file. Add your own
+ stuff as well. For example, to support another language such as Go you could add file:
+ *setup-go.el* in *./custom* and require it in *init.el*.
 
 # Installed packages and a brief summary of what they do
 
 There are many options and packages available in modern *emacs*. It is
 dizzying. Many compete with each other to do similar tasks, but in different
 ways. These packages will often conflict with each other. It is best to install
-and use one new thing at a time. Learn what it can do for you and make sure it
-is not causing any issues before installing the next package. It is a trial and
-error process. Frequently, packages conflict with each other and try to take the
-same key-bindings and run from the same hooks. If you delve deep into the
-system, you can often make them get along. That is pretty advanced, and prone to
-breakage on package updates. It is best to keep some simplicity and use one
-package for one thing at a time.
+and use **one** new thing at a time. Learn what it can do for you and make sure it
+is not causing any issues before installing the next package. 
+
+Getting packages to play together is a trial and error process. To get them to
+use each other seamlessly you frequently have to edit configuration files and
+setup variables so that one package knows to use another one.
+
+Sometimes, packages conflict with each other and try to take the same
+key-bindings and run from the same hooks. If you delve deep into your
+configuration, you can often make them get along. 
+
+While learning, it is best to keep some simplicity and use one package for a
+particular purpose.
 
 Below I describe the packages currently used in this setup and where you can go
 to get more information about them.
 
 ## company & company-box
 
-**company** is a text auto-completion framework for *emacs*. *company* provides
-a pluggable search framework for auto-complete results. See:
-<https://company-mode.github.io/>.
+**company** is a text auto-completion framework for *emacs* that runs in a pop
+overlay. *company* provides a pluggable search framework for auto-complete
+results/suggestions. So the company front-end uses various code completion
+back-ends. Each back-end provides suggestions. Company pops-up a window with the
+resulting lists in an drop-down style overlay over the top of the current
+buffer. The user can navigate the options presented and select the desired
+item. Then the overlay then goes away. See: <https://company-mode.github.io/>.
+Company only works with simple overlays over a buffer, more complex completion
+frameworks that require their own buffer are also included as options and
+described below in *Display completion engines*.
 
 **company-box** Extends company to support the display of icons in-line with
 text results. This requires certain compile-time options to be set and certain
-libraries must be available at runtime. See:
-<https://github.com/sebastiencs/company-box>.
+libraries must be available at runtime. The icons are meant to provide
+additional context to help the user identify the items listed. The colors of the
+icons are meant to identify the backend that provided the suggestion. The icons
+themselves are meant to identify type of completion item, i.e. a variable or a
+function call. See: <https://github.com/sebastiencs/company-box>.
 
 ## async
 
 **async** supports running code asyncronously, which lets elisp cooperatively
 switch between running processes whenever a process blocks on I/O. This is
-similar to Node.js or Python asyncio. See:
-<https://github.com/jwiegley/emacs-async>.
+similar to Node.js or Python asyncio. It is used by other packages to help
+*emacs* perform better. See: <https://github.com/jwiegley/emacs-async>.
 
 ## window-numbering
 
@@ -356,23 +386,63 @@ is the number of the window from top to bottom, left to right. See:
 <http://nschum.de/src/emacs/window-numbering-mode/>. This is much faster than
 using *C-x o* repeatedly.
 
-## helm & helm-swoop
+## Display completion engines
 
-**helm** is an advanced completion engine for *emacs* that allows you to narrow
-results from provided lists. It extends and replaces the default tab completion
-that comes out of the box with *emacs*. It compliments *company* in that they
-really do different things.
+Much of the time, completion lists are too complicated to use a pop-up, like
+company.
 
+Emacs comes with a basic completion framework built-in that displays items
+either in a special buffer called a *mini-buffer*.  This mini-buffer provides
+basic tab-style completion.
+
+Other options with more advanced completion exist as well, like helm, ido and
+ivy/counsel.  This setup lets you can choose from the default *emacs*
+mini-buffer tab completion, from *helm* or from *ivy-counsel*. You can do this
+by editing your *init.el* file The default selection is currently *ivy-counsel*.
+
+To change the default *ivy/counsel* to *helm*, edit your *init.el* file:
+
+```lisp
+;; helm completion control
+(require 'setup-helm)
+;; ivy counsel completion control
+;;(require 'setup-ivy-counsel)
+```
+
+To disable *ivy/counsel* and use the built-in *emacs* tab-completion:
+
+```lisp
+;; helm completion control
+;; (require 'setup-helm)
+;; ivy counsel completion control
+;;(require 'setup-ivy-counsel)
+```
+
+A brief description of helm and ivy follow.
+
+### helm & helm-swoop
+
+**helm** is an advanced completion display engine for *emacs* that allows you to
+narrow results from provided lists in a frame or buffer. It extends and replaces
+the default tab completion that comes out of the box with *emacs*. 
 <https://emacs-helm.github.io/helm/>
 
-Other options exist as well, like ido and ivy/counsel.
-
-**helm-swoop** uses helm to display matching content in another buffer. See
+**helm-swoop** uses helm to display matching content in another buffer and replaces the default *emacs i-search*. See
 <https://github.com/emacsorphanage/helm-swoop> and
 <https://www.emacswiki.org/emacs/HelmSwoop>. This is a helper package used by
-other packages and specific configurations.
+other packages and specific configurations when it would be more appropriate to
+display the results in a separate buffer (window frame).
 
-## projectile & helm-projectile
+### ivy & counsel
+
+**ivy** is a more recent completion framework for *emacs*. It is considered faster then *helm*, but was originally more limited. Its features are improved and its speed advantage is probably over-stated. It integratesn nicely with *all-the-icons*.
+
+**counsel** is a collection of ivy-enhanced replacement commands for *emacs*. These commands are bound over the default *emacs* commands to provide ivy completion functionality, instead of the *emacs* default tab-completion.
+
+**swiper** uses counsel to display matching content in another buffer and replaces the default *emacs i-search*.
+*ivy/counsel/swiper* are currently the default completion frameworks.
+
+## projectile, helm-projectile & counsel-projectile
 
 **projectile** is an *emacs* package that adds project management support. This
 is similar to how monolithic IDE's provide their own (often IDE specific)
@@ -387,6 +457,9 @@ See: <https://docs.projectile.mx/en/latest/>
 
 **helm-projectile** is an *emacs* package that extends projectile to use helm
 completion. See <https://github.com/bbatsov/helm-projectile>.
+
+**counsel-projectile** is an *emacs* package that extends projectile to use
+ivy/counsel completion.
 
 ## whitespace ws-butler or whitespace-cleanup-mode
 
@@ -453,10 +526,13 @@ matches in the mode-line whenever a search is occurring. See:
 **iedit** Let's you edit multiple matching targets simultaneously. See:
 <https://github.com/victorhge/iedit>.
 
-## markdown mode
+## markdown & markdown-preview modes
 
-Provides the ability to edit markdown files and see the output of files
-edited. See: <https://www.emacswiki.org/emacs/MarkdownMode>
+Provides the ability to edit markdown files and see the output of files edited
+in a browser. *markdown-preview-mode* tracks changes on-the-fly by starting up a
+server and connecting your browser to the servers endpoint. Each time you save a
+change, the endpoint is regenerated. *markdown-mode* provides syntax
+highlighting. See: <https://www.emacswiki.org/emacs/MarkdownMode>.
 
 ## flyspell & flyspell-correct
 
@@ -487,7 +563,7 @@ language. This allows developers of language features to focus on delivering
 engineering features and not focus on integration with one particular IDE or
 editor. This approach means that you will have to have a server running for each
 programming language you want supported. *emacs* *lsp-mode* starts these servers
-for you as needed. The installation is more complicated because in add to
+for you as needed. The installation is more complicated because in addition to
 *emacs* you will have to configure and install the server separately.
 
 I have found that unlike other C tagging solutions, the *lsp-mode* server scales
@@ -503,16 +579,17 @@ You can edit *custom/setup-editing.el* to disable *lsp-mode* if you do not want 
 <https://github.com/emacs-lsp/lsp-ui>
 
 **emacs-ccls** is an emacs mode that runs the ccls server (you must install ccls
-server). This provides lsp data for C/C++ & Objective C. See:
+server). This server provides lsp data for C/C++ & Objective C. See:
 <https://github.com/MaskRay/emacs-ccls>.
 
-The current setup enables both of these. You can edit *custom/setup-c.el* to change this.
+The current setup enables ccls for C and C++. You can edit *custom/setup-c.el*
+to change this.
 
-In order to use C++ features of ccls and lsp-mode, you will need to have *ccls*
+In order to use the features of ccls and lsp-mode, you will need to have *ccls*
 installed.  For detailed instructions on how to install and setup the *ccls*
-server, see <https://github.com/MaskRay/ccls/wiki>.
+server are here: <https://github.com/MaskRay/ccls/wiki>.
 
-Quick instructions follow:
+Yet, quick instructions follow:
 
 Debian based:
 
@@ -545,16 +622,17 @@ pip install python-lsp-server[all]
 
 The current setup enables *python-lsp-server*. You can edit
 *custom/setup-python.el* and *custom/setup-editing.el* to change or disable
-this.
+it.
 
 Note that the default install of *python-lsp-server* sets it up to use *flake8* by default.
 
 Further note that the *python-language-server* by Palantir is the deprecated
-older version of *python-lsp-server*, so don't install it.
+older version of *python-lsp-server*, so **don't** install it, this version is
+more recent.
 
 ## Native code compilation
 
-A native compilation feature that I have set up is:
+This setup uses native compilation. in *setup-general.el* you will see:
 
 ```elisp
 (setq comp-deferred-compilation t)
@@ -590,14 +668,14 @@ The *tide* package further extends this support. See <http://github.com/ananthak
 
 # Notes on using emacs as a Python 'IDE': eply or lsp-mode
 
-There are two environments I have used and which this configuration can support:
-*lsp-mode* with *python-lsp-server* or *elpy*.
+There are two Python IDE environments I have used, and which this configuration
+can support: *lsp-mode* with *python-lsp-server* or *elpy*.
 
 Both provide advanced Python specific IDE abilities and greatly enhance the
 Python programming experience inside *emacs*.
 
 Both have some of the same features and this overlap means they are not fully
-compatible. You will have to pick one without lots of custom configuring.
+compatible. You will have to pick between them.
 
 In general, *elpy* is a bit leaner. *lsp-mode* is slower and provides a more
 consistent interface between the different programming languages which
@@ -958,14 +1036,15 @@ alias e="${VISUAL}"
 
 I like to run *emacs* in daemon mode (as a server/service). This is a better way
 to run *emacs* on modern systems, since it shares resources between instances of
-*emacs*. This allows each client instance to integrate with the others, instead
-of having single instances that can clober over the same files since they don't
-know about each other's existence.
+*emacs*. Each client instance will then integrate with the others, instead
+of each instance being able to over-write the same files since they don't
+know about each other.
 
 By default, *emacsclient* starts a new client that connects to the existing
-emacs daemon running in the background. The "--alternate-editor=" syntax is
-awkward, but it essentially means start up a new *emacs daemon* if the client
-could not find an existing daemon to connect to.
+emacs daemon running in the background. A daemon is another way of saying a
+service, or server. The "--alternate-editor=" syntax above is awkward, but it
+essentially means start up a new *emacs daemon* if the client could not find an
+existing daemon to connect to.
 
 Note that if you put an argument after the *=*, the behavior changes. When the
 deamon isn't already running, *emacsclient* will instead try to start the
@@ -984,7 +1063,12 @@ anyway: unless your primary display screen consists of a teletype machine with a
 kernels/drivers that assume such things for debugging purposes. Regardless, you
 should understand what these two variables mean to other UNIX era legacy
 programs before you decide to mimic this setup, or you may run into issues when
-using said programs.
+using legacy programs.
+
+Regardless of the intended original use, window environments 
+like GNOME and KDE are in the habit of looking for the VISUAL environment
+variable to tell them what default editor to use. Command line terminal programs
+are firmly in the habit of using EDITOR to tell them what editor to start.
 
 We are passing *-t* to run a terminal version when EDITOR is used by some other
 program. This starts a new *emacs* client inside the terminal window.
@@ -1018,12 +1102,12 @@ Programs" option under your desktop environments control panel or settings.
 
 ## Making emacs your tiling window manager
 
-Another option worth consideration is just making *emacs* your window manager.
-See: <https://github.com/ch11ng/exwm>.
+Another option worth consideration is just making *emacs* your window
+manager/window environment.  See: <https://github.com/ch11ng/exwm>.
 
 ## Custom projectile project setup via dot dir-locals files
 
-I often set projectile variables to perform custom operations per project.
+I sometimes set projectile variables to perform custom operations per project.
 This is done via the dot dir-locals file at the root of each source project:
 *.dir-locals.el*.
 
@@ -1118,15 +1202,20 @@ output *Hello* instead of *c*. That wouldn't be very usable. Usually macros and
 lisp functions are bound to modifier key combinations called *chords*. For
 example, *Cnt-X, Cnt-S* saves the contents of an *emacs* buffer to disk. In this
 case, an *emacs* function is bound to the chorded key combination: *Cnt-X,
-Cnt-S*. You could rebind if you to any other key in *emacs* if you wanted to.
-
+Cnt-S*. You could rebind it to any other key in *emacs* if you really wanted
+to. For example, *evil* is an *emacs* package to make emacs more useable for
+*vi/vim* users. Among other things, it provides alternate keybindings that mimic
+*vi/vim*.
 
 ## What are emacs macros?
 
-*emacs* means *editor macros*, or an editor that supported saving macros and
-lisp functions, binding them to key chords, and then replaying them when the
-chords were called. This was a core concept of the editor and was considered a
-"killer-feature" of its day. It differentiated *emacs* from most other editors.
+*emacs* means *editor macros*. It is an editor that supports saving macros and
+lisp functions in files, reading them when the editor was started, binding them
+to key chords according to setup files, and then replaying the macros and
+functions when the bound chords were typed. This was a core concept of the
+editor and was considered a "killer-feature" of its day. It differentiated
+*emacs* from most other editors, where a keys meaning was hard-coded and could
+not be re-configured.
 
 ## What are Kenesis keyboard macros?
 
@@ -1136,7 +1225,7 @@ allows you to save macros into the keyboard's memory and then retrieve them and
 replay them without retyping them. Kenesis added this feature as an ergonomic
 way to save keyboard users from having to type difficult sequences over and over
 again. So when we talk about these macros, we are not talking about storing
-macros inside of *emacs* itself.
+macros inside of *emacs* itself, but inside the keyboard's memory.
 
 A keyboard stored macro will simply replay to the operating system, and the
 macros stored could be for anything: *Microsoft Word*, or a button-combo for a
@@ -1144,17 +1233,18 @@ video game. I just happen to save macros in my keyboard that type out *emacs*
 *chords*. In case you are wondering: Yes, I could program keyboard macros that in
 turn called custom written emacs macros. Which is very meta.
 
-So why do this in a keyboard instead of just using *emacs* macros directly?
+So why do this in a keyboard instead of just using *emacs* chords directly?
 
-Because *emacs* only has so many high quality modifier keys to bind its own
+Because *emacs* only has so many high quality chord combinations to bind its own
 macros too. A downside of keyboards having few usable modifier keys is that you
 eventually have macros and functions bound to weird un-ergonomic keyboard
 combinations that aren't really usable:
 *C-M-Spc-some-weird-thing-you-have-to-type-and-wont-remember-ever* is one of the
-biggest problems with *emacs*, or any similar editor.
+biggest problems with *emacs*, or any similar editor that reaches a high level
+of complexity.
 
 The traditional *IDE* way to handle this is to have large drop-down lists and
-icons everywhere-- cluttering up your screen. They require you to cycle through
+icons everywhere-- cluttering up your screen. This required you to cycle through
 them with a mouse or hot keys and arrow keys.
 
 More modern approaches use a search to just find the command you want to run as
@@ -1210,7 +1300,8 @@ the rat and clicking on a tiny gear icon in some GUI IDE.
 
 Of course, for this to work you first must program the macros into your Kenesis
 keyboard. Which means you must have a Kenesis keyboard. To use the keypad layer
-with modifier key, you must also have something like the foot pedal.
+with a modifier key, you must also have something like a programmable foot
+pedal.
 
 If you keyboard professionally, it is worth investing in these items *before*
 you get repetitive stress injuries, regardless of what editor or IDE you use. In
@@ -1227,80 +1318,93 @@ Here are the macros I have programmed into my keyboard and what they do:
 | **Cursor movement keys** |   |  |
 | *kp-a* | beginning-of-defun      | C-M-a |
 | *kp-e* | end-of-defun            | C-M-e |
-| *kp-LAlt-Space*  |  mark-defun  | C-M-h |
 | *kp-f*  | forward-sexp     | C-M-f |
 | *kp-b*  | backward-sexp    | C-M-b |
+| *kp-LAlt-Space*  |  mark-defun  | C-M-h |
 | *kp-LCtrl-Space* | mark-sexp     | C-M-<SPC> |
 | **Spell Checking** | | |
 | *kp-s* |  ispell-word | (Meta-$) |
 | *kp-NumRow4* | flyspell-mode | M-x flyspell-mode |
 | *kp-LShift-NumRow4* | flyspell-prog-mode | M-x flyspell-prog-mode |
-| **Projectile commands** | | |
-| *kp-c* | projectile-compile-project |  C-c p c |
-| *kp-t* | projectile-compile-test      |  C-c p P |
-| *kp-1* | projectile-package-project   | C-c p K  |
-| *kp-!* | projectile-install-project   | C-c p L  |
-| *kp-g* | grep in projectile project   | C-c p g s |
-| *kp-r* | Simple refactoring with text replace in current project | C-c p r |
-| *kp-LShift-f* | Jump to any file in the project | C-c p f |
-| *kp-LShift-d* | Jump to any directory in the project | C-c p d |
-| *kp-LShift-b* | List buffers local to current project | C-c p b |
-| *kp-LShift-e* | Jump to recently visited files in project | C-c p e |
-| *kp-LShift-o* | Multi-occur in project buffers | C-c p o |
-| *kp-LShift-p* | Switch visited projects (visited once and Projectile remembers) | C-c p p |
-| *kp-LShift-a* | Switch between header and detail files .h and .c or .cpp | C-c p a |
-| **helm commands** |   |  |
-*kp-z* | moo-jump-local |  C-M-k |
-| *kp-LCtrl-r* | helm-gtags-find-rtags  | C-c g r |
-| *kp-LCtrl-s* | helm-gtags-find-symbol | C-c g s. |
-| *kp-LCtrl-a* | helm-gtags-tags-in-this-function | C-c g a |
-| *kp-right arrow* | helm-gtags-dwim  | M-. |
-| *kp-left arrow* | tags-loop-continue |  M-, |
-| *kp-LCtrl-f* | helm-gtags-find-files | |
-| *kp-LCtrl-d* | helm-gtags-show-stack | |
-| *kp-w* |  helm-man-woman, view man pages | C-c h m |
 | **dired-sidebar** |    |    |
 | *kp-q* | dired-sidebar-toggle-sidebar |  |
+| **Projectile commands** | | |
+| *kp-LCtrl-g* | grep in projectile project   | C-c p g s |
+| *kp-LCtrl-c* | projectile-compile-project |  C-c p c |
+| *kp-LCtrl-t* | projectile-compile-test      |  C-c p P |
+| *kp-LCtrl-p* | projectile-package-project   | C-c p K  |
+| *kp-LCtrl-i* | projectile-install-project   | C-c p L  |
+| *kp-LCtrl-r* | Simple refactoring with text replace in current project | C-c p r |
+| *kp-LCtrl-f* | Jump to any file in the project | C-c p f |
+| *kp-LCtrl-d* | Jump to any directory in the project | C-c p d |
+| *kp-LCtrl-b* | List buffers local to current project | C-c p b |
+| *kp-LCtrl-e* | Jump to recently visited files in project | C-c p e |
+| *kp-LCtrl-o* | Multi-occur in project buffers | C-c p o |
+| *kp-LCtrl-p* | Switch visited projects (visited once and Projectile remembers) | C-c p p |
+| *kp-LCtrl-a* | Switch between header and detail files .h and .c or .cpp | C-c p a |
+| **lsp commands** |   |  |
+| *kp-LAlt-LShift-r* | lsp-workspace-restart  | s-l w r |
+| *kp-LAlt-LShift-q* | lsp-workspace-shutdown  | s-l w q  |
+| *kp-LAlt-r* | lsp-rename |  S-l r r |
+| *kp-LAlt-f* | lsp-format-region  |  |
+| *kp-LAlt-LShift-f* | lsp-format-buffer |  S-l = = |
+| *kp-LAlt-d* | lsp-find-definition |  S-l g g |
+| *kp-LAlt-t* | lsp-find-type-definition | S-l g t |
+| *kp-LAlt-left arrow* | lsp-find-references | S-l g r |
+| *kp-LAlt-right arrow* | lsp-find-declaration | S-l g d |
+| *kp-LAlt-down arrow* | lsp-treemacs-call-hierarchy | S-l g h |
+| *kp-LAlt-i* | lsp-find-implementation | S-l g i |
+| *kp-LAlt-Space* | lsp-signature-activate | C-S-SPC |
+| *kp-LAlt-h* | lsp-describe-thing-at-point | S-l h h |
+| *kp-LAlt-s* | lsp-treemacs-symbols-goto-symbol |  |
 
 ## Raw keybindings
 
-Below are the raw commands that are saved to a text file on a usb drive and then
-loaded into the keyboard to program the above macros (read the keyboard owner's
-manual to see how to do this).
+Below are the raw commands that are saved to a text file on the keyboard to
+program the above macros (read the keyboard owner's manual to see how to do this
+as it differs from keyboard versions). Note that I don't use Super short-cuts
+but call the bound function with *M-x*. This is because I often run in a virtual
+machine, and in such cases the super modifier is handled by Windows and doesn't
+get passed to the VM.
 
 ```
 [rwin]>[ralt]
 [kp-rwin]>[kp-ralt]
 {kp-a}>{-lctrl}{-lalt}{a}{+lalt}{+lctrl}
 {kp-e}>{-lctrl}{-lalt}{e}{+lctrl}{+lalt}
-{kp-lalt}{kp0}>{-lctrl}{-lalt}{h}{+lalt}{+lctrl}
 {kp-f}>{-kp-lctrl}{-kp-lalt}{kp-f}{+kp-lalt}{+kp-lctrl}
 {kp-b}>{-kp-lctrl}{-kp-lalt}{kp-b}{+kp-lalt}{+kp-lctrl}
+{kp-lalt}{kp0}>{-lctrl}{-lalt}{h}{+lalt}{+lctrl}
 {kp-lctrl}{kp0}>{-lctrl}{-lalt}{space}{+lalt}{+lctrl}
 {kp-s}>{-lalt}{-lshift}{4}{+lshift}{+lalt}
-{kp-4}>{-lalt}{x}{+lalt}{d125}{f}{l}{y}{s}{p}{e}{l}{l}{hyphen}{m}{o}{d}{e}{d125}{enter}
-{kp-lshift}{kp-4}>{-lalt}{x}{+lalt}{d125}{f}{l}{y}{s}{p}{e}{l}{l}{hyphen}{p}{r}{o}{g}{hyphen}{m}{o}{d}{e}{d125}{enter}
-{kp-c}>{-lctrl}{c}{+lctrl}{p}{c}
-{kp-t}>{-lctrl}{c}{+lctrl}{p}{-lshift}{p}{+lshift}{enter}
-{kp-1}>{-lctrl}{c}{+lctrl}{p}{-lshift}{K}{+lshift}{enter}
-{kp-!}>{-lctrl}{c}{+lctrl}{p}{-lshift}{L}{+lshift}{enter}
-{kp-g}>{-lctrl}{c}{+lctrl}{p}{g}{s}
-{kp-r}>{-lctrl}{c}{+lctrl}{p}{r}
-{kp-lshift}{kp-f}>{-lctrl}{c}{+lctrl}{p}{f}
-{kp-lshift}{kp-d}>{-lctrl}{c}{+lctrl}{p}{d}
-{kp-lshift}{kp-b}>{-lctrl}{c}{+lctrl}{p}{b}
-{kp-lshift}{kp-e}>{-lctrl}{c}{+lctrl}{p}{e}
-{kp-lshift}{kp9}>{-lctrl}{c}{+lctrl}{p}{o}
-{kp-lshift}{kpmin}>{-lctrl}{c}{+lctrl}{p}{p}
-{kp-lshift}{kp-a}>{-lctrl}{c}{+lctrl}{p}{a}
-{kp-z}>{-lctrl}{-lalt}{k}{+lalt}{+lctrl}
-{kp-lctrl}{kp-r}>{-lctrl}{c}{+lctrl}{g}{r}
-{kp-lctrl}{kp-s}>{-lctrl}{c}{+lctrl}{g}{s}
-{kp-lctrl}{kp-a}>{-lctrl}{c}{+lctrl}{g}{a}
-{kp-right}>{-lalt}{.}{+lalt}
-{kp-left}>{-lalt}{,}{+lalt}
-{kp-lctrl}{kp-f}>{-lalt}{x}{+lalt}{d125}{h}{e}{l}{m}{hyphen}{g}{t}{a}{g}{s}{hyphen}{f}{i}{n}{d}{hyphen}{f}{i}{l}{e}{s}{d125}{enter}
-{kp-lctrl}{kp-d}>{-lalt}{x}{+lalt}{d125}{h}{e}{l}{m}{hyphen}{g}{t}{a}{g}{s}{hyphen}{s}{h}{o}{w}{hyphen}{s}{t}{a}{c}{k}{d125}{enter}
-{kp-w}>{-lctrl}{c}{+lctrl}{h}{m}
-{kp-q}>{-lalt}{x}{+lalt}{d125}{d}{i}{r}{e}{d}{hyphen}{s}{i}{d}{e}{b}{a}{r}{hyphen}{t}{o}{g}{g}{l}{e}{hyphen}{s}{i}{d}{e}{b}{a}{r}{d125}{enter}
+{kp-4}>{-lalt}{x}{+lalt}{d125}{f}{l}{y}{s}{p}{e}{l}{l}{hyphen}{m}{o}{d}{e}{enter}
+{kp-lshift}{kp-4}>{-lalt}{x}{+lalt}{d125}{f}{l}{y}{s}{p}{e}{l}{l}{hyphen}{p}{r}{o}{g}{hyphen}{m}{o}{d}{e}{enter}
+{kp-q}>{-lalt}{x}{+lalt}{d125}{d}{i}{r}{e}{d}{hyphen}{s}{i}{d}{e}{b}{a}{r}{hyphen}{t}{o}{g}{g}{l}{e}{hyphen}{s}{i}{d}{e}{b}{a}{r}{enter}
+{kp-lctrl}{kp-g}>{-lctrl}{c}{+lctrl}{p}{g}{s}
+{kp-lctrl}{kp-c}>{-lctrl}{c}{+lctrl}{p}{c}
+{kp-lctrl}{kp-t}>{-lctrl}{c}{+lctrl}{p}{-lshift}{p}{+lshift}{enter}
+{kp-lctrl}{kp-p}>{-lctrl}{c}{+lctrl}{p}{-lshift}{K}{+lshift}{enter}
+{kp-lctrl}{kp-i}>{-lctrl}{c}{+lctrl}{p}{-lshift}{L}{+lshift}{enter}
+{kp-lctrl}{kp-r}>{-lctrl}{c}{+lctrl}{p}{r}
+{kp-lctrl}{kp-f}>{-lctrl}{c}{+lctrl}{p}{f}
+{kp-lctrl}{kp-d}>{-lctrl}{c}{+lctrl}{p}{d}
+{kp-lctrl}{kp-b}>{-lctrl}{c}{+lctrl}{p}{b}
+{kp-lctrl}{kp-e}>{-lctrl}{c}{+lctrl}{p}{e}
+{kp-lctrl}{kp9}>{-lctrl}{c}{+lctrl}{p}{o}
+{kp-lctrl}{kpmin}>{-lctrl}{c}{+lctrl}{p}{p}
+{kp-lctrl}{kp-a}>{-lctrl}{c}{+lctrl}{p}{a}
+{kp-lalt}{kp-lshift}{kp-r}>{-lalt}{x}{+lalt}{d125}{l}{s}{p}{hyphen}{w}{o}{r}{k}{s}{p}{a}{c}{e}{hyphen}{r}{e}{s}{t}{a}{r}{t}{enter}
+{kp-lalt}{kp-lshift}{kp-q}>{-lalt}{x}{+lalt}{d125}{l}{s}{p}{hyphen}{w}{o}{r}{k}{s}{p}{a}{c}{e}{hyphen}{s}{h}{u}{t}{d}{o}{w}{n}{enter}
+{kp-lalt}{kp-r}>{-lalt}{x}{+lalt}{d125}{l}{s}{p}{hyphen}{r}{e}{n}{a}{m}{e}{enter}
+{kp-lalt}{kp-f}>{-lalt}{x}{+lalt}{d125}{l}{s}{p}{hyphen}{f}{o}{r}{m}{a}{t}{hyphen}{r}{e}{g}{i}{o}{n}{enter}
+{kp-lalt}{kp-lshift}{kp-f}>{-lalt}{x}{+lalt}{d125}{l}{s}{p}{hyphen}{f}{o}{r}{m}{a}{t}{hyphen}{b}{u}{f}{f}{e}{r}{enter}
+{kp-lalt}{kp-d}>{-lalt}{x}{+lalt}{d125}{l}{s}{p}{hyphen}{f}{i}{n}{d}{hyphen}{d}{e}{f}{i}{n}{i}{t}{i}{o}{n}{enter}
+{kp-lalt}{kp-t}>{-lalt}{x}{+lalt}{d125}{l}{s}{p}{hyphen}{f}{i}{n}{d}{hyphen}{t}{y}{p}{e}{hyphen}{d}{e}{f}{i}{n}{i}{t}{i}{o}{n}{enter}
+{kp-lalt}{kp-left}>{-lalt}{x}{+lalt}{d125}{l}{s}{p}{hyphen}{f}{i}{n}{d}{hyphen}{r}{e}{f}{e}{r}{e}{n}{c}{e}{s}{enter}
+{kp-lalt}{kp-right}>{-lalt}{x}{+lalt}{d125}{l}{s}{p}{hyphen}{f}{i}{n}{d}{hyphen}{d}{e}{c}{l}{a}{r}{a}{t}{i}{o}{n}{enter}
+{kp-lalt}{kp-down}>{-lalt}{x}{+lalt}{d125}{l}{s}{p}{hyphen}{t}{r}{e}{e}{m}{a}{c}{s}{hyphen}{c}{a}{l}{l}{hyphen}{h}{i}{e}{r}{a}{r}{c}{h}{y}{enter}
+{kp-lalt}{kp8}>{-lalt}{x}{+lalt}{d125}{l}{s}{p}{hyphen}{f}{i}{n}{d}{hyphen}{i}{m}{p}{l}{e}{m}{e}{n}{t}{a}{t}{i}{o}{n}{enter}
+{kp-lalt}{kp0}>{-lalt}{x}{+lalt}{d125}{l}{s}{p}{hyphen}{s}{i}{g}{n}{a}{t}{u}{r}{e}{hyphen}{a}{c}{t}{i}{v}{a}{t}{e}{enter}
+{kp-lalt}{kp-h}>{-lalt}{x}{+lalt}{d125}{l}{s}{p}{hyphen}{d}{e}{s}{c}{r}{i}{b}{e}{hyphen}{t}{h}{i}{n}{g}{hyphen}{a}{t}{hypen}{p}{o}{i}{n}{t}{enter}
+{kp-lalt}{kp-s}>{-lalt}{x}{+lalt}{d125}{l}{s}{p}{hyphen}{t}{r}{e}{e}{m}{a}{c}{s}{hyphen}{s}{y}{m}{b}{o}{l}{s}{hyphen}{g}{o}{t}{o}{hyphen}{s}{y}{m}{b}{o}{l}{enter}
 ```
