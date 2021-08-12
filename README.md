@@ -1320,8 +1320,8 @@ Here are the macros I have programmed into my keyboard and what they do:
 | *kp-e* | end-of-defun            | C-M-e |
 | *kp-f*  | forward-sexp     | C-M-f |
 | *kp-b*  | backward-sexp    | C-M-b |
-| *kp-LAlt-Space*  |  mark-defun  | C-M-h |
-| *kp-LCtrl-Space* | mark-sexp     | C-M-<SPC> |
+| *kp-h*  |  mark-defun  | C-M-h |
+| *kp-Space* | mark-sexp     | C-M-<SPC> |
 | **Spell Checking** | | |
 | *kp-s* |  ispell-word | (Meta-$) |
 | *kp-NumRow4* | flyspell-mode | M-x flyspell-mode |
@@ -1374,8 +1374,8 @@ get passed to the VM.
 {kp-e}>{-lctrl}{-lalt}{e}{+lctrl}{+lalt}
 {kp-f}>{-kp-lctrl}{-kp-lalt}{kp-f}{+kp-lalt}{+kp-lctrl}
 {kp-b}>{-kp-lctrl}{-kp-lalt}{kp-b}{+kp-lalt}{+kp-lctrl}
-{kp-lalt}{kp0}>{-lctrl}{-lalt}{h}{+lalt}{+lctrl}
-{kp-lctrl}{kp0}>{-lctrl}{-lalt}{space}{+lalt}{+lctrl}
+{kp-h}>{-lctrl}{-lalt}{h}{+lalt}{+lctrl}
+{kp0}>{-lctrl}{-lalt}{space}{+lalt}{+lctrl}
 {kp-s}>{-lalt}{-lshift}{4}{+lshift}{+lalt}
 {kp-4}>{-lalt}{x}{+lalt}{d125}{f}{l}{y}{s}{p}{e}{l}{l}{hyphen}{m}{o}{d}{e}{enter}
 {kp-lshift}{kp-4}>{-lalt}{x}{+lalt}{d125}{f}{l}{y}{s}{p}{e}{l}{l}{hyphen}{p}{r}{o}{g}{hyphen}{m}{o}{d}{e}{enter}
