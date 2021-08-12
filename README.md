@@ -1329,7 +1329,7 @@ Here are the macros I have programmed into my keyboard and what they do:
 | **dired-sidebar** |    |    |
 | *kp-q* | dired-sidebar-toggle-sidebar |  |
 | **Projectile commands** | | |
-| *kp-LCtrl-g* | grep in projectile project   | C-c p g s |
+| *kp-LCtrl-g* | grep in projectile project   | C-c p s g |
 | *kp-LCtrl-c* | projectile-compile-project |  C-c p c |
 | *kp-LCtrl-t* | projectile-compile-test      |  C-c p P |
 | *kp-LCtrl-p* | projectile-package-project   | C-c p K  |
@@ -1340,7 +1340,7 @@ Here are the macros I have programmed into my keyboard and what they do:
 | *kp-LCtrl-b* | List buffers local to current project | C-c p b |
 | *kp-LCtrl-e* | Jump to recently visited files in project | C-c p e |
 | *kp-LCtrl-o* | Multi-occur in project buffers | C-c p o |
-| *kp-LCtrl-p* | Switch visited projects (visited once and Projectile remembers) | C-c p p |
+| *kp-LCtrl-s* | Switch visited projects (visited once and Projectile remembers) | C-c p p |
 | *kp-LCtrl-a* | Switch between header and detail files .h and .c or .cpp | C-c p a |
 | **lsp commands** |   |  |
 | *kp-LAlt-LShift-r* | lsp-workspace-restart  | s-l w r |
@@ -1380,18 +1380,18 @@ get passed to the VM.
 {kp-4}>{-lalt}{x}{+lalt}{d125}{f}{l}{y}{s}{p}{e}{l}{l}{hyphen}{m}{o}{d}{e}{enter}
 {kp-lshift}{kp-4}>{-lalt}{x}{+lalt}{d125}{f}{l}{y}{s}{p}{e}{l}{l}{hyphen}{p}{r}{o}{g}{hyphen}{m}{o}{d}{e}{enter}
 {kp-q}>{-lalt}{x}{+lalt}{d125}{d}{i}{r}{e}{d}{hyphen}{s}{i}{d}{e}{b}{a}{r}{hyphen}{t}{o}{g}{g}{l}{e}{hyphen}{s}{i}{d}{e}{b}{a}{r}{enter}
-{kp-lctrl}{kp-g}>{-lctrl}{c}{+lctrl}{p}{g}{s}
+{kp-lctrl}{kp-g}>{-lctrl}{c}{+lctrl}{p}{s}{g}
 {kp-lctrl}{kp-c}>{-lctrl}{c}{+lctrl}{p}{c}
 {kp-lctrl}{kp-t}>{-lctrl}{c}{+lctrl}{p}{-lshift}{p}{+lshift}{enter}
-{kp-lctrl}{kp-p}>{-lctrl}{c}{+lctrl}{p}{-lshift}{K}{+lshift}{enter}
-{kp-lctrl}{kp-i}>{-lctrl}{c}{+lctrl}{p}{-lshift}{L}{+lshift}{enter}
+{kp-lctrl}{kpmin}>{-lctrl}{c}{+lctrl}{p}{-lshift}{K}{+lshift}{enter}
+{kp-lctrl}{kp8}>{-lctrl}{c}{+lctrl}{p}{-lshift}{L}{+lshift}{enter}
 {kp-lctrl}{kp-r}>{-lctrl}{c}{+lctrl}{p}{r}
 {kp-lctrl}{kp-f}>{-lctrl}{c}{+lctrl}{p}{f}
 {kp-lctrl}{kp-d}>{-lctrl}{c}{+lctrl}{p}{d}
 {kp-lctrl}{kp-b}>{-lctrl}{c}{+lctrl}{p}{b}
 {kp-lctrl}{kp-e}>{-lctrl}{c}{+lctrl}{p}{e}
 {kp-lctrl}{kp9}>{-lctrl}{c}{+lctrl}{p}{o}
-{kp-lctrl}{kpmin}>{-lctrl}{c}{+lctrl}{p}{p}
+{kp-lctrl}{kp-s}>{-lctrl}{c}{+lctrl}{p}{p}
 {kp-lctrl}{kp-a}>{-lctrl}{c}{+lctrl}{p}{a}
 {kp-lalt}{kp-lshift}{kp-r}>{-lalt}{x}{+lalt}{d125}{l}{s}{p}{hyphen}{w}{o}{r}{k}{s}{p}{a}{c}{e}{hyphen}{r}{e}{s}{t}{a}{r}{t}{enter}
 {kp-lalt}{kp-lshift}{kp-q}>{-lalt}{x}{+lalt}{d125}{l}{s}{p}{hyphen}{w}{o}{r}{k}{s}{p}{a}{c}{e}{hyphen}{s}{h}{u}{t}{d}{o}{w}{n}{enter}
