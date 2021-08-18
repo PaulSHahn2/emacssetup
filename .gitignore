@@ -1,4 +1,5 @@
 *~
+*.el.gpg
 *.elc
 *.eld
 auto-save-list
@@ -19,3 +20,6 @@ tramp
 *.log
 recentf
 var/
+bookmarks
+org-caldav-*.el
+.org-id-locations

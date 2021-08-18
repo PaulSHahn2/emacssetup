@@ -105,11 +105,12 @@
 
 ;; A minor mode which displays current match and total matches in the mode line
 ;; when a search is being performed.
-(use-package anzu
-  :init
-  (global-anzu-mode)
-  (global-set-key (kbd "M-%") 'anzu-query-replace)
-  (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp))
+;; with swiper anzu is kinda useless
+;;(use-package anzu
+;;  :init
+;;  (global-anzu-mode)
+;;  (global-set-key (kbd "M-%") 'anzu-query-replace)
+;;  (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp))
 
 ;; Allows us to edit multiple occurrences of the same pattern simultaneously
 (use-package iedit
