@@ -19,6 +19,47 @@ tracking the head of the master branch. See: [BUILD.md](BUILD.md)].
 For resources on learning and configuring *emacs*, please see:
 [TUTORIALS.md](TUTORIALS.md).
 
+# Repository Layout
+
+This *emacs.d* directory divides emacs setup into several files. At the top
+level, the *init.el* file contains only the most generic of *emacs* settings. In
+this setup, it's main purpose is to require other settings files, which live
+under the *custom* subdirectory. This lets us break out portions of setup code
+into bite-sized and purpose specific pieces. This is preferable to having
+everything inside one large file. The main downfall of this approach is that
+sometimes packages interact with other packages-- such as *lsp mode* and many
+minor-mode packages. In these cases, it isn't always clear where to put setup
+content. I attempt to put it where it best fits, but removing one package may
+require editing of more than one setup file.
+
+The following list shows the settings files and a brief description of what they
+configure:
+
+* **init.el:** Main configuration entry point. Sets the package repository (melpa). Specifies required packages and custom setup files that must be loaded.
+* **custom/setup-secrets.el.gpg:** This isn't checked in, you should create it from [./skel/setup-secrets.el](./skel/setup-secrets.el). This is a *gpg* encrypted file with elisp code that is meant to house your passwords and secrets. Don't check it in.
+* **custom/setup-general.el:** Contains generic display setup. Examples of such would be: match parenthesis, don't show the tool bar, display the time, set the time zone, etc.
+* **custom/setup-helm.el:** Contains setup instructions specific to *helm*. Disabled by default. Helm is an alternate incremental completion framework that replaces the default i-search completion. See <https://github.com/emacs-helm/helm>.
+* **custom/setup-ivy-counsel.el:** Contains setup instructions specific to *ivy and counsel*. Ivy is an alternate incremental completion framework that replaces the default i-search completion. See <https://github.com/abo-abo/swiper>.
+* **custom/setup-editing.el:** Contains generic file editing setup that is not specific to a major or minor mode, or to any other more specific *emacs* subsystem.
+* **custom/setup-programming.el:** Contains setup specific to generic programming language support, mainly lsp configuration.
+* **custom/setup-spelling.el:** Setup specific to spell checking.
+* **custom/setup-git.el:** Contains setup information specific to using *git*, *github*, Azure DevOps and similar.
+* **custom/setup-projectile.el:** Contains setup specific to the projectile project management system.
+* **custom/setup-shell.el:** Setup specific to writing shell scripts.
+* **custom/setup-markdown.el:** Contains setup specific to editing markdown.
+* **custom/setup-python.el:** Contains setup specific to Python programming.
+* **custom/setup-javascript.el:** Contains setup specific to Javascript programming.
+* **custom/setup-c.el:** Contains setup specific to C/C++ programming.
+* **custom/setup-orgmode.el:** Contains setup specific to using organizational mode, including syncing meetings/agenda items with a remote server.
+* **custom/setup-theme.el:** Contains setup specific to the default theme selection.
+* **custom/setup-windows.el:** Contains setup specific to running *emacs* on the Windows OS. Disabled by default.
+
+If you don't need a portion of this setup, simply remove the *(require
+ 'setup-{item).el)* require statement from the *init.el* file. Further, add your
+ own stuff as well. For example, to support programming in another language such
+ as Go you could add file: *setup-go.el* in *./custom* and require it in
+ *init.el*.
+
 # Repository usage
 
 You can check this, or another similar repository out-- then configure it
@@ -57,7 +98,7 @@ source repository:
     ```
     When you first start *emacs* after cloning, you may get errors reported in the terminal window. This is because the settings you have cloned from *git* reference packages that have not been installed yet. Usually these are "require" statements that are failing since the package is missing. Most package includes are via the "use-package" directive, which is a bit smarter and tries to download the package if it is missing. Regardless, we can fix the missing includes in the next step.
 
-4. List your installed packages:
+4. List install and update packages:
 
     * **M-x list-packages:** This shows the packages available. Press 'r' to reload available packages from the configured repositories (melpa).
     * **M-x package-install-selected-packages:** installs all packages listed in our *.emacs.d/init.el* file, in section *package-selected-packages*.
@@ -72,21 +113,22 @@ source repository:
     current package and you will just end up having to download it again later.
 
 5. It is likely that newer versions of packages will be installed than the stale
-   ones listed in the *init.el* file checked out from the repo. You can refresh
+   ones listed in the *init.el* file checked out from the repo. So you  refresh
    the repository listing by pressing 'r'. You can then download newer versions
    by marking them with *u*. Then press *x* to download and install the latest
    packages.
 
 6. When all packages are installed, you can exit *emacs* and restart it. If you
    are running *emacs* in *daemon mode*, you need to restart the dameon:
-   `killall emacs` and then restart. You should no longer see startup errors in
-   the terminal. You can also re-evaluate the *init.el* source file via visiting
-   the file in the buffer and running *eval-buffer*.
+   `killall emacs` from a shell and then restart. You can also re-evaluate the
+   *init.el* source file via visiting the file in the buffer and running
+   *eval-buffer*. After restarting, you should no longer see startup errors in
+   the terminal.
 
 7. If you still are having errors with your setup, verify that you are running
-   in an appropriate Python virtual environment. If you are on a redhat style
-   distribution, you may need to enable a scl environment before starting
-   *emacs*.
+   in an appropriate Python virtual environment, if applicable. If you are on a
+   RHEL style distribution, you may need to enable a scl environment before
+   starting *emacs*, if it was complied against said environment.
 
 ## Sharing your settings across machines
 
@@ -113,7 +155,7 @@ This repository has a windows branch that gets updated from time-to-time when I
 need to develop on Windows.
 
 *emacs* is a second class citizen in this second class OS. You will need to
-install some things to have a chance of getting an full-featured IDE
+install some things to have a chance of getting a full-featured IDE
 running. You can either mess with installing *emacs* as a part of a complete
 Cygwin, Min32 or Windows UNIX toolkit, or you can try the Windows native version
 of *emacs*. I prefer to run *emacs* in the native version. If that doesn't work,
@@ -121,7 +163,7 @@ then I install a virtual machine with a Linux flavor in its
 entirety. Intermediary solutions with toolkit's typically cause more problems
 than they solve, so I avoid them.
 
-To get a *emacs* Windows native mostly working:
+To get a *emacs* Windows native version mostly working:
 
 1. Get the latest zip file (installer exe) for *emacs*: <http://gnu.mirror.constant.com/emacs/windows/>
 2. Run the installer.
@@ -146,9 +188,9 @@ To get a *emacs* Windows native mostly working:
 *Don't forget to commit and push your changes back to your repository.*
 
 Note that *emacs* can interactively change the contents of your
-*~/emacs.d/init.el* file as it saves updates you have requested. *emacs* does
-this when you use drop-down menu options to change settings or when you install
-or upgrade packages via *package-list-packages*.
+*~/emacs.d/init.el* file as it saves the package and configuration updates you
+have requested. *emacs* does this when you use drop-down menu options to change
+settings or when you install or upgrade packages via *package-list-packages*.
 
 You should make sure you are done making such changes before you attempt to
 commit your changes with git. To commit changes, you can either use *git* on the
@@ -159,48 +201,9 @@ intuitive.
 # How to build emacs from source
 
 This main branch tracks the bleeding-edge of *emacs* and requires an un-released
-version of *emacs* built from source.
+version of *emacs* that is built from source.
 
 To build *emacs* from source, please see: [BUILD.md](BUILD.md).
-
-# Repository Layout
-
-This *emacs.d* directory divides emacs setup into several files. At the top
-level, the *init.el* file contains only the most generic of *emacs* settings. In
-our setup, it's main purpose is to require other settings files, which live
-under the *custom* subdirectory. This lets us break out portions of setup code
-into bite-sized and purpose specific pieces. This is preferable to having
-everything inside one large file. The main downfall of this approach is that
-sometimes packages interact with other packages-- such as *lsp mode* and many
-minor-mode packages. In these cases, it isn't always clear where to put setup
-content. I attempt to put it where it best fits.
-
-The following list shows the settings files and a brief description of what they
-do:
-
-* **init.el:** Main configuration entry point. Sets the package repository (melpa). Specifies required packages and custom setup files that must be loaded.
-* **custom/setup-secrets.el.gpg:** This isn't checked in, you should create it from <./skel/setup-secrets.el>. This is a *gpg* encrypted file with elisp code that is meant to house your passwords and secrets. Don't check it in.
-* **custom/setup-general.el:** Contains generic display setup. Examples of such would be: match parenthesis, don't show the tool bar, display the time, set the time zone, etc.
-* **custom/setup-helm.el:** Contains setup instructions specific to *helm*. Disabled by default. Helm is an alternate incremental completion framework that replaces the default i-search completion. See <https://github.com/emacs-helm/helm>, and the helm section below.
-* **custom/setup-ivy-counsel.el:** Contains setup instructions specific to *ivy and counsel*. Ivy is an alternate incremental completion framework that replaces the default i-search completion. See <https://github.com/abo-abo/swiper>, and the ivy section below.
-* **custom/setup-editing.el:** Contains generic file editing setup that is not specific to a major or minor mode, or to any other more specific *emacs* subsystem.
-* **custom/setup-programming.el:** Contains setup specific to generic programming language support.
-* **custom/setup-spelling.el:** Setup specific to spell checking.
-* **custom/setup-git.el:** Contains setup information specific to using *git*, *github*, Azure DevOps and similar.
-* **custom/setup-projectile.el:** Contains setup specific to the projectile project management system.
-* **custom/setup-shell.el:** Setup specific to shell scripting.
-* **custom/setup-markdown.el:** Contains setup specific to markdown mode.
-* **custom/setup-python.el:** Contains setup specific to Python programming.
-* **custom/setup-javascript.el:** Contains setup specific to Javascript programming.
-* **custom/setup-c.el:** Contains setup specific to C/C++ programming.
-* **custom/setup-orgmode.el:** Contains setup specific to organizational mode, including syncing meetings/agenda items with a remote server.
-* **custom/setup-theme.el:** Contains setup specific to the default theme selection.
-* **custom/setup-windows.el:** Setup specific to running *emacs* on windows. Disabled by default.
-
-If you don't need a portion of this setup, simply remove the *(require
- 'setup-{item).el)* require statement from the *init.el* file. Further, add your
- own stuff as well. For example, to support another language such as Go you
- could add file: *setup-go.el* in *./custom* and require it in *init.el*.
 
 # Installed packages and a brief summary of what they do
 
@@ -210,10 +213,10 @@ Please see: [INSTALLED.md](INSTALLED.md).
 
 Please see: [PYTHONENV.md](PYTHONENV.md).
 
-# General emacs Environment Setup on Linux
+# General emacs environment setup on Linux
 
 Please see: [GENERALENV.md](GENERALENV.md).
 
-# Setting up the Kenesis Advantage II keyboard for emacs
+# Setting up the programmable Kenesis Advantage II keyboard for emacs
 
 Please see: [KENESIS.md](KENESIS.md).
