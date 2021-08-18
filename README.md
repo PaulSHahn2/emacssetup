@@ -149,7 +149,7 @@ a *windows* branch that is a fork of the *GNU emacs-27* branch. The *master*
 branch tracks the master branch of *GNU emacs* and assumes you have built from
 source with native compilation enabled.
 
-# Windows Specific Stuff
+## Windows Specific Stuff
 
 This repository has a windows branch that gets updated from time-to-time when I
 need to develop on Windows. My notes for setting up *emacs* on *Windows* are here:
