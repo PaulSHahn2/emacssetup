@@ -1,6 +1,6 @@
-;;; setup-editing --- Summary:
+;;; setup-spelling.el --- Summary: Spell and fly minor mode settings.
 ;;; Commentary:
-;; Emacs 26 and newer
+;; Emacs 28 and newer
 ;;; Code:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;

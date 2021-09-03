@@ -1,11 +1,8 @@
-;;; setup-editing --- Summary:
+;;; setup-shell.el --- Summary:Setup shell mode behavior
 ;;; Commentary:
-;; Emacs 26 and newer
+;; Emacs 28 and newer
 ;;; Code:
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Shell Scripting Support
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defvar my-term-shell "/usr/bin/bash")
 
 (defadvice ansi-term (before force-bash)

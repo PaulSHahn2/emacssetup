@@ -1,6 +1,6 @@
-;;; initfile --- Summary: General display & appearance settings
+;;; setup-theme.el --- Summary: Appearance settings
 ;;; Commentary:
-;; Emacs 26 and newer
+;; Emacs 28 and newer
 ;;; Code:
 
 ;; I like this one the best, but it

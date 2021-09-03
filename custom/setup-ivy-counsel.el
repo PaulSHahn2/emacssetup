@@ -1,6 +1,6 @@
-;;; initfile --- Summary:
+;;; setup-ivy-counsel.el --- Summary: Setup ivy counsel and swiper
 ;;; Commentary:
-;; Emacs 26 and newer
+;; Emacs 28 and newer
 ;;; Code:
 
 (use-package counsel

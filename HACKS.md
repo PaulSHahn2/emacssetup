@@ -13,12 +13,11 @@ dired-sidebar-term-get-pwd:
 (defun dired-sidebar-term-get-pwd ()
   "Get current directory of `term-mode'.
 
-This is still somewhat experimental/hacky and now hardcoded to prompt.
+This is still somewhat experimental/hacky and now hardcoded to prompt."
   (interactive)
   (condition-case nil
       (progn
-        ;;(message (elt split-string(elt(split-string((thing-at-point 'line) ":") 1) "$") 0))
-        (let ((result (elt split-string(elt(split-string((thing-at-point 'line) ":") 1) "$")0)))
+        (let (result (elt (split-string(elt(split-string((thing-at-point line) ":") 1) "$")0)))
           result))
     (error
      default-directory)))

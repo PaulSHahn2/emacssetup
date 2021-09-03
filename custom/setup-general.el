@@ -1,6 +1,6 @@
-;;; initfile --- Summary: General display & appearance settings
+;;; setup-general.el --- Summary: General display & appearance settings
 ;;; Commentary:
-;; Emacs 26 and newer
+;; Emacs 28 or newer
 ;;; Code:
 
 
@@ -150,6 +150,9 @@
   (diminish 'eldoc-mode)
   (diminish 'desktop-environment-mode)
 )
+
+;; inhibit fond unloading
+(setq inhibit-compacting-font-caches t)
 
 (message "setup-general complete")
 

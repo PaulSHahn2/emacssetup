@@ -1,6 +1,6 @@
-;;; initfile --- Summary:
+;;; setup-c.el --- Summary: Setup C and C++
 ;;; Commentary:
-;; Emacs 26 and newer
+;; Emacs 28 and newer
 ;;; Code:
 
 ;; NOTE: Don't use CEDET or semantic. They are in lisp and slower.

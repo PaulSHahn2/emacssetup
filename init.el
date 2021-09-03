@@ -1,6 +1,6 @@
 ;;; initfile --- Summary:
 ;;; Commentary:
-;; Emacs 26 and newer
+;; Emacs 28 and newer
 ;;; Code:
 
 ;; Added by Package.el.  This must come before configurations of

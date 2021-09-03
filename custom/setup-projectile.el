@@ -1,6 +1,6 @@
-;;; setup-editing --- Summary:
+;;; setup-projectile.el --- Summary: Setup Projectile configuration
 ;;; Commentary:
-;; Emacs 26 and newer
+;; Emacs 28 and newer
 ;;; Code:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

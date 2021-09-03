@@ -1,6 +1,6 @@
-;;; setup-editing --- Summary:
+;;; setup-editing.el --- Summary: Setup general editing settings.
 ;;; Commentary:
-;; Emacs 26 and newer
+;; Emacs 28 and newer
 ;;; Code:
 
 ;; move the mouse cursor when emacs cursor collides with it

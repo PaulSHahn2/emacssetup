@@ -1,6 +1,6 @@
-;;; setup-editing --- Summary:
+;;; setup-mail.el --- Summary: A placeholder
 ;;; Commentary:
-;; Emacs 26 and newer
+;; Emacs 28 and newer
 ;;; Code:
 
 

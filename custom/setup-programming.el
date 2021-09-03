@@ -1,6 +1,6 @@
-;;; setup-editing --- Summary:
+;;; setup-programming.el --- Summary: Setup generic programming modes & LSP
 ;;; Commentary:
-;; Emacs 26 and newer
+;; Emacs 28 and newer
 ;;; Code:
 
 ;; setup GDB, these settings are used by multiple language debugging backends, not just c

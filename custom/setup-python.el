@@ -1,6 +1,6 @@
-;;; initfile --- Summary:
+;;; setup-python.el --- Summary: Setup python programming.
 ;;; Commentary:
-;; Emacs 26 and newer
+;; Emacs 28 and newer
 ;;; Code:
 
 (setq python-indent 4)

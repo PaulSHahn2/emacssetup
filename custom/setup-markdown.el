@@ -1,6 +1,6 @@
-;;; setup-editing --- Summary:
+;;; setup-markdown.el --- Summary: Markdown, restructure settings.
 ;;; Commentary:
-;; Emacs 26 and newer
+;; Emacs 28 and newer
 ;;; Code:
 
 ;;;;;;;;;;;;;;;;;;;

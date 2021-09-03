@@ -1,6 +1,6 @@
-;;; initfile --- Summary:
+;;; setup-orgmode.el --- Summary: Setup org mode settings.
 ;;; Commentary:
-;; Emacs 26 and newer
+;; Emacs 28 and newer
 ;;; Code:
 
 (use-package org

@@ -1,6 +1,8 @@
-;;; initfile --- Summary:
+;;; setup-windows.el --- Summary: setup Microsoft Windows specific configurations
 ;;; Commentary:
-;; Emacs 26 and newer
+;;; Emacs 28 and newer
+;;; This may not work as it hasn't been used in awhile.
+;;; Code:
 
 ;; On windows, use hunspell
 (setq-default ispell-program-name "hunspell")

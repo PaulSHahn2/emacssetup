@@ -1,6 +1,7 @@
-;;; initfile --- Summary:
+;;; setup-helm.el --- Summary: older helm settings.
 ;;; Commentary:
-;; Emacs 26 and newer
+;; Emacs 28 and newer
+;; This is probably out of date as it has not been updated in quite awhile.
 ;;; Code:
 
 (use-package helm

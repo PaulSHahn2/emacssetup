@@ -1,6 +1,6 @@
-;;; initfile --- Summary:
+;;; setup-git.el --- Summary: General version control settings.
 ;;; Commentary:
-;; Emacs 26 and newer
+;; Emacs 28 and newer
 ;;; Code:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
