@@ -1,0 +1,8 @@
+# Move to /usr/share/xsessions and set permissions
+[Desktop Entry]
+Name=xinitrc
+Comment=Default to users xinitrc
+Exec=/home/paul/.xinitrc
+Type=Application
+
+

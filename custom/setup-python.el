@@ -9,7 +9,6 @@
 (add-hook 'python-mode-hook 'lsp-deferred)
 
 (use-package pyvenv
-  :ensure t
   :after python-mode
   :init(setenv "WORKON_HOME" "~/python_venvs/"))
 
@@ -49,5 +48,7 @@
 ;;            :around (lambda (fun &rest args)
 ;;                      (unless (eq (car args) 'flymake-mode)
 ;;                        (apply fun args))))
+
+(message "setup-python complete")
 
 (provide 'setup-python)

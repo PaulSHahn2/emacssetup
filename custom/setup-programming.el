@@ -4,14 +4,11 @@
 ;;; Code:
 
 ;; setup GDB, these settings are used by multiple language debugging backends, not just c
-
-(setq
- ;; use gdb-many-windows by default
- gdb-many-windows t
-
- ;; Non-nil means display source file containing the main routine at startup
- gdb-show-main t
- )
+;; use gdb-many-windows by default
+;; Non-nil means display source file containing the main routine at startup
+'(gdb-show-main t)
+'(gdb-many-windows t)
+;;(setq gdb-many-windows t gdb-show-main t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Generic code completion
@@ -21,10 +18,8 @@
 ;; talk to completion servers.
 ;; https://github.com/emacs-lsp/lsp-mode
 (use-package lsp-mode
-  :ensure t
   :init
   (use-package lsp-ui
-    :ensure t
     :after lsp-mode
     :hook (lsp-mode . lsp-ui-mode)
     :config
@@ -65,12 +60,35 @@
   (setq lsp-enable-on-type-formatting nil)
   ;; (setq lsp-before-save-edits nil)
   ;; Use flycheck instead of flymake
-  (setq lsp-prefer-flymake nil)
+  '(lsp-prefer-flymake nil)
+  '(lsp-enable-which-key-integration t)
+)
+;; https://www.flycheck.org/en/latest/user
 
-  (lsp-enable-which-key-integration t)
+(use-package flycheck
+  :diminish flycheck-mode
+  :defer t
+  :init
+  ;; Turn flycheck on everywhere
+  (global-flycheck-mode t)
+  ;; Silence missing function warnings
+  (eval-when-compile
+   (declare-function global-flycheck-mode "flycheck.el"))
+  :config
+  ;; There are issues with company mode and flycheck in terminal mode.
+  ;; This is outlined at:
+  ;; https://github.com/abingham/emacs-ycmd
+  (when (not (display-graphic-p))
+    (setq flycheck-indication-mode nil))
 )
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package rainbow-mode
+  :hook (css-mode js-mode js2-mode html-mode)
+)
+
+(message "setup-programming complete")
 
 (provide 'setup-programming)

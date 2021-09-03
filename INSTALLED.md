@@ -1,20 +1,27 @@
 # Installed packages and a brief summary of what they do
 
-There are many options and packages available in modern *emacs*. It is
-dizzying. Many compete with each other to do similar tasks, but in different
-ways. These packages will often conflict with each other. It is best to install
-and use **one new thing at a time**. Learn what it can do for you and make sure it
-is not causing any issues before installing the next package.
+## Philosophy to packages
+
+There are many packages available in *emacs* and many ways to configure each
+package. It is dizzying. Many packages compete with each other to do similar
+tasks, but in different ways. These packages will often conflict with each
+other. It is best to install and use **one new package at a time**. Learn what
+each package can do for you and make sure they do not cause any issues before
+installing the next package.
 
 Getting packages to play together is a trial and error process. To get them to
-use each other seamlessly you frequently have to edit configuration files and
-setup variables so that one package knows to use another one.
+use each other seamlessly frequently requires editing this configuration and
+setting variables. Often these variables tell one package about another one to
+get them to inter-operate the best.
 
 Sometimes, packages conflict with each other and try to take the same
 key-bindings and run from the same hooks. If you delve deep into your
-configuration, you can often make them get along.
+configuration, you can often make these packages get along.
 
-While learning, it is best to keep it as simple as possible.
+Some packages duplicate functionality. One is not always better than another,
+they are just tailored to different workflows and personal preferences. You
+usually have to use just one of these packages at a time, even if you have
+installed more than one of them.
 
 Below I describe the packages currently used in this setup and where you can go
 to get more information about them.
@@ -47,10 +54,12 @@ switch between running processes whenever a process blocks on I/O. This is
 similar to Node.js or Python asyncio. It is used by other packages to help
 *emacs* perform better. See: <https://github.com/jwiegley/emacs-async>.
 
+This package is included as a built-in in newer versions of *emacs*.
+
 ## window-numbering
 
-Allows us to simply switch between windows in a frame with *M-#*, where number
-is the number of the window from top to bottom, left to right. See:
+Allows us to simply switch between windows in a frame with *M-#*, where the
+number sign is the number of the window from top to bottom, left to right. See:
 <http://nschum.de/src/emacs/window-numbering-mode/>. This is much faster than
 using *C-x o* repeatedly.
 
@@ -60,39 +69,42 @@ Much of the time, completion lists are too complicated to use a pop-up, like
 company.
 
 Emacs comes with a basic completion framework built-in called
- *i-search*. *i-search* displays items in a special buffer called a
- *mini-buffer*.  *i-search* provides basic tab-style completion similar to what
- is available in the bash and similar-style shells.
+ *i-search*. *i-search* displays items in a special buffer called the
+ *mini-buffer*.  *i-search* provides tab-style completion to cycle through
+ matches. This is similar to what is available in the bash and other shells. I
+ used this for 15 years, and it works fairly well. You may never want or need
+ more.
 
-Other options with more advanced completion options exist as well, like helm,
-ido and ivy/counsel.  This setup lets you can choose from the default *i-search*
-tab completion, from *helm* or from *ivy-counsel*.  The default selection is
-currently *ivy-counsel*. To change to a different completion method, edit your
-*init.el* file.
+Other options with more advanced completion options exist as well-- like helm,
+ido, and ivy/counsel.  This setup lets you can choose from the default
+*i-search* tab completion, from *helm* or from *ivy-counsel*.  My current
+selection is *ivy-counsel*. To change to a different completion method, edit
+your *init.el* file and comment out ivy-counsel. The double semi-colon indicates
+a comment in e-lisp.
 
 For example, to change the default *ivy/counsel* to *helm*, edit your *init.el*
 file:
 
 ```lisp
-;; helm completion control
+;; use helm completion control
 (require 'setup-helm)
 ;; ivy counsel completion control
 ;;(require 'setup-ivy-counsel)
 ```
 
-To disable *ivy/counsel* and *helm* and use the built-in *emacs* tab-completion:
+To disable *ivy/counsel* and *helm* and use the built-in *emacs* i-search
+tab-completion, comment all of these entries out:
 
 ```lisp
-;; helm completion control
+;; helm completion control disabled
 ;; (require 'setup-helm)
-;; ivy counsel completion control
-;;(require 'setup-ivy-counsel)
+;; ivy counsel completion control disabled
+;; (require 'setup-ivy-counsel)
 ```
 
 ### helm & helm-swoop
 
-Why use *ivy-counsel* or *helm* over *i-search*? A brief description of helm and
-ivy follow.
+Why use *helm* and friends over *i-search*?
 
 **helm** is an advanced completion display engine for *emacs* that allows you to
 narrow results from provided lists in a frame or buffer. It extends and replaces
@@ -128,10 +140,10 @@ intuitive to me as *i-search* or *ivy*. These are admittedly subjective things.
 is similar to how monolithic IDE's provide their own (often IDE specific)
 project file format (or use something like *Maven*).  Projectile includes
 support for automatic refactoring of code and movement between files within
-projects.  It is programming language and tool agnostic and attempts to
+projects.  Projectile is programming language and tool agnostic and attempts to
 recognize development projects of different types that were created by different
-tooling. Support for specific project types is modular via the use of
-tool specific plugins and extensions.
+tooling. Support for specific project types is modular via the use of tool
+specific plugins and extensions.
 
 See: <https://docs.projectile.mx/en/latest/>
 
@@ -141,9 +153,9 @@ completion. See <https://github.com/bbatsov/helm-projectile>.
 **counsel-projectile** is an *emacs* package that extends projectile to use
 ivy/counsel completion.
 
-Obviously, you will want to install these if you use ivy or helm.
+Obviously, you will want to install one of these if you use ivy or helm.
 
-## whitespace ws-butler or whitespace-cleanup-mode
+## Whitespace management
 
 I include two different packages that can get rid of bad white-space.
 
@@ -170,9 +182,9 @@ be a better choice since it lets you aggressively fix bad whitespace.
 
 You can manually start *whitespace-cleanup-mode* on any buffer via *M-x
 whitespace-cleanup-mode*. You can set it up to be always on instead of
-*ws-bulter* by editing *~/emacs.d/custom/setup-editing.el* and removing the
-lines commenting out *global-whitespace-cleanup-mode*. You should also comment
-out *ws-butler* at the same time (you really only want one running at a time).
+*ws-bulter* by editing *~/emacs.d/custom/setup-editing.el*. Remove the
+lines commenting out *global-whitespace-cleanup-mode*. Then you should also comment
+out *ws-butler* (you really only want one of these running at a time).
 
 ## volatile-highlights
 
@@ -180,15 +192,6 @@ out *ws-butler* at the same time (you really only want one running at a time).
 in. The text will appear highlighted until the next keystroke. This provides a
 tiny bit more visual context to what we have done. See:
 <https://www.emacswiki.org/emacs/VolatileHighlights>.
-
-## undo-tree
-
-**undo-tree** makes *emacs* undo features behave a bit more like *vim*. Instead
-of a linear undo, we can see a tree of changes and move between those
-changes. See <http://www.dr-qubit.org/emacs.php> and
-<https://www.emacswiki.org/emacs/UndoTree>. This is handy, but complicated to
-learn if you are used to the default behavior. I frequently get frustrated with
-remembering the new approach and may disable this at some point.
 
 ## yasnippet
 
@@ -323,22 +326,62 @@ machine code. This will cause *emacs* to pause and will use large amounts of CPU
 while compiling. Once done, things are **much** faster. Comment the line out if
 you don't want this.
 
-## magit
+## Git management
+
+### magit
 
 A full *git* layer for integration of git with emacs. This is very handy and
 very well done. See:
 <https://magit.vc/manual/magit/Getting-Started.html#Getting-Started>.
 
-## git-gutter
+### git-gutter
 
 Keeps track of changes to our git version controlled files in a small "gutter"
 window on the left of the buffer. See:
 <https://github.com/emacsorphanage/git-gutter>.
 
-## git-timemachine
+### git-timemachine
 
 Lets us navigate and interactively view the versions of a git controlled
 file. See: <https://github.com/emacsmirror/git-timemachine>.
+
+## Mode line management
+
+I have installed *smart-modeline* and *diminish*. *smart-modeline* refactors the
+appearance of the mode-line to make it cleaner and more up-to-date. It is not as
+fancy looking as doom modeline or spacemacs mode-lines, but is pretty-much
+compatible with any other package.
+
+The *diminish* package selectively gets rid of cruft that accumulates in the
+mode-line when you run many modes at once. Most modes put a message in the
+mode-line, unfortunately most of these messages don't display anything
+interesting or helpful. This is particularly true for minor modes. This lets you
+silence that and keeps your mode-line more clutter free.
+
+## editing as root
+
+*sudo-edit* lets you edit a buffer as root via the sudo command.
+
+## organization mode
+
+*org-vcard* and *org-contacts* lets you read in and share contact information
+from PIM applications in org mode. At least theoretically. Not really satisfied
+with these packages and this is a major reason I have not moved my email back into *emacs*.
+
+*org-caldav* is very nice and syncs your org mode agenda to your remote calendaring applications.
+
+*org-bullets* tidies up your screen to display pretty bullets for different indentation levels.
+
+## Advanced searching and finding: avy & which-key
+
+*avy* lets you find items that you are searching for very quickly. It is best to
+search for videos of it in action to understand how it works.
+
+*which-key* is very helpful. When you are typing out a command or key combo,
+pausing for more than a moment results in a completion buffer appearing that
+shows what the possible key-bindings completions are and what functions they are
+bound to. Brief descriptions are provided. It is simply not possible for most to
+remember all possible keybindings and this makes using *emacs* simple as can be.
 
 ## Javascript and json support via tide and JSX
 
@@ -349,3 +392,10 @@ The *tide* package further extends this support. See <http://github.com/ananthak
 ## Python packages and setup
 
 Please see: [PYTHONENV.md](PYTHONENV.md).
+
+
+## Window management
+
+*emacs* can manage x-windows as a window manager. This is selectively enabled when the *XDG_CURRENT_DESKTOP* environment variable is set and when the OS type is GNU Linux.
+
+Please see: [EXWM.md](EXWM.md).

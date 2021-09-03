@@ -53,6 +53,12 @@ This author's teaching approach doesn't use de-tanglement and starts from
 scratch most of the time. It is more concise, but not as thorough as the
 previous video series.
 
+Last, Xah Lee has a series of video's that complement his ergo *emacs* website:
+
+<https://www.youtube.com/c/XahLee/videos>
+
+These often cover more advanced material.
+
 ## Pre-configured emacs distributions
 
 Another option is to borrow/take someone else's setup, like copying this
@@ -133,7 +139,7 @@ these issues, this C++ *emacs* material may be dated by the time you read it.
 * <https://nilsdeppe.com/posts/emacs-c++-ide2>
 * <https://www.sandeepnambiar.com/setting-up-emacs-for-c++/>
 * <https://trivialfis.github.io/emacs/2017/08/02/C-C++-Development-Environment-on-Emacs.html>
-
+* <https://undo.io/resources/gdb-watchpoint/using-gdb-emacs/>
 
 ## Python setup resources:
 
@@ -159,3 +165,16 @@ Resources I have used in the past:
 * <https://patrickskiba.com/emacs/2019/09/07/emacs-for-react-dev.html>
 * <http://wikemacs.org/wiki/JavaScript>
 * <https://emacs-lsp.github.io/lsp-mode/tutorials/reactjs-tutorial/>
+
+## emacs history: Undo is also redo
+
+The default undo mechanism is perhaps the most powerful. I have used others, but
+they get the undo history corrupted, or they get me confused enough I cannot get
+back to my changes. Since I have used *emacs* for so long, I don't find the
+default mechanism confusing-- and alternatives seem less powerful. This sums
+that up:
+
+* <http://ergoemacs.org/emacs/emacs_best_redo_mode.html>
+
+The key thing to remember is that if you want to redo something, emacs treats
+that as if you are just running another undo.

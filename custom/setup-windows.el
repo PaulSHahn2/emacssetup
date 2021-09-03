@@ -12,4 +12,6 @@
 ;; On Windows, set default to unix line endings.
 (setq default-buffer-file-coding-system 'utf-8-unix)
 
+(message "setup-windows complete")
+
 (provide 'setup-windows)

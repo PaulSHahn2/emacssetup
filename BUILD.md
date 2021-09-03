@@ -15,9 +15,9 @@ code to the version of *emacs* that you wish to build.
 ```bash
 # add sources repos in /etc/apt/sources.list by uncommenting srcs repositories matching the binary equivalents.
 sudo apt-get update
-# this isnt perfect as it doesnt track the most recent emacs but it gets you close
+# this next command isnt perfect as it doesnt track the most recent emacs but it gets your dependencies close
 sudo apt-get build-dep emacs
-# some other things that you want, versions may be out of date
+# some other things that you want, versions may be out of date-- so check
 sudo apt-get install libgtk-3-dev libwebkit2gtk-4.0-dev libjansson-dev libjansson4 libgccjit-10-dev
 # checkout emacs
 git clone git://git.savannah.gnu.org/emacs.git
@@ -55,3 +55,8 @@ sudo make install prefix=/usr/local
 Note that on RHEL you will need to enable devtoolset-10 via *scl* each time you
 start your sessions, before you can run *emacs*.  I typically also start my
 Python virtual environment before starting the *emacs* daemon.
+
+Note that if you run scl enable or start a python 3 virtual env that it can
+break various OS tooling like *yum/dnf* and friends. These tools expect older
+versions of utilities and older versions of python and are not forward
+compatible.

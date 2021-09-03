@@ -8,12 +8,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; use magit
-(use-package magit
-  :ensure t
-  )
+(use-package magit)
+
 ;; use git-gutter to keep track of changes in real time
 (use-package git-gutter
-  :ensure t
   :diminish git-gutter-mode
   :defer 2
   :init
@@ -23,14 +21,14 @@
   :config
   ;; If you enable global minor mode
   (global-git-gutter-mode t)
-  )
+)
 
-;; Auto update every 5 seconds
+;; Auto update every 10 seconds
 (setq git-gutter:update-interval 10)
 
 ;; use git-timemachine to navigate between file versions
-(use-package git-timemachine
-  :ensure t
-  )
+(use-package git-timemachine)
+
+(message "setup-git complete")
 
 (provide 'setup-git)

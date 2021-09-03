@@ -53,6 +53,7 @@ configure:
 * **custom/setup-orgmode.el:** Contains setup specific to using organizational mode, including syncing meetings/agenda items with a remote server.
 * **custom/setup-theme.el:** Contains setup specific to the default theme selection.
 * **custom/setup-windows.el:** Contains setup specific to running *emacs* on the Windows OS. Disabled by default.
+* **custom/setup-exwm.el:** Contains setup specific to making *emacs* an X-windows window manager. This would replace KDE or GNOME desktop environments with *emacs* itself.
 
 If you don't need a portion of this setup, simply remove the *(require
  'setup-{item).el)* require statement from the *init.el* file. Further, add your
@@ -60,12 +61,23 @@ If you don't need a portion of this setup, simply remove the *(require
  as Go you could add file: *setup-go.el* in *./custom* and require it in
  *init.el*.
 
+**Note:** I don't use org mode to manage *emacs* configuration via
+entanglement. This is a very popular way to manage your *emacs* setup and many
+do it now. To me code should be self-documenting and not include lots of
+comments. Mixing them via org mode seems like an excellent approach for
+learning/teaching, but I don't really like the approach for everyday use.
+
+It is personal preference. Plus, I already am used to using markdown/info-tek
+and other documentation markup languages and I don't yet like using org-mode
+for those purposes.
+
 # Repository usage
 
 You can check this, or another similar repository out-- then configure it
-further to meet your needs as you go. That is kinda how I ended up with this
-repository, checking it out from someone else, adding my own settings and then
-using it for years, before adding it back to *github*.
+further to meet your needs as you go. I ended up with this repository by
+checking it out from someone's C++ tutorial setup, adding my own settings and
+then using it for years, before adding it back into *github* to share with
+others in my organization.
 
 To copy this *emacs* setup, or any similar one you see checked in to a github
 source repository:
@@ -96,7 +108,14 @@ source repository:
     ```bash
     $ emacs
     ```
-    When you first start *emacs* after cloning, you may get errors reported in the terminal window. This is because the settings you have cloned from *git* reference packages that have not been installed yet. Usually these are "require" statements that are failing since the package is missing. Most package includes are via the "use-package" directive, which is a bit smarter and tries to download the package if it is missing. Regardless, we can fix the missing includes in the next step.
+
+    When you first start *emacs* after cloning, you may get errors reported in
+    the terminal window. This is because the settings you have cloned from *git*
+    reference packages that have not been installed yet. Usually these are
+    "require" statements that are failing since the package is missing. Most
+    package includes are now via the "use-package" directive, which is a bit
+    smarter and tries to download the package if it is missing. Regardless, we
+    can fix the missing includes in the next step.
 
 4. List install and update packages:
 
@@ -112,23 +131,26 @@ source repository:
     it finishes downloading a large package-- then it will loose track of the
     current package and you will just end up having to download it again later.
 
-5. It is likely that newer versions of packages will be installed than the stale
-   ones listed in the *init.el* file checked out from the repo. So you  refresh
-   the repository listing by pressing 'r'. You can then download newer versions
-   by marking them with *u*. Then press *x* to download and install the latest
-   packages.
+5. It is likely that newer versions of packages can be installed than what are
+    referenced in the stale *init.el* file checked out from the repo. You can
+    refresh the repository listing by pressing 'r'. You can then download newer
+    versions by marking them by pressing *u*. Then press *x* to download and
+    install the latest packages.
 
-6. When all packages are installed, you can exit *emacs* and restart it. If you
-   are running *emacs* in *daemon mode*, you need to restart the dameon:
-   `killall emacs` from a shell and then restart. You can also re-evaluate the
-   *init.el* source file via visiting the file in the buffer and running
-   *eval-buffer*. After restarting, you should no longer see startup errors in
-   the terminal.
+6. When all packages are installed or updated, it is probably best to exit
+   *emacs* and restart it. If you are running *emacs* in *daemon mode*, you need
+   to restart the dameon: `killall emacs` from a shell and then restart. You can
+   also re-evaluate the *~/emacs.d/init.el* source file via visiting the file in
+   the buffer and running *eval-buffer*. Depending on what changed, it may not
+   reload all changes reliably. If you have an issue after evaluating the
+   buffer, restart *emacs* before continuing to troubleshoot.
 
-7. If you still are having errors with your setup, verify that you are running
-   in an appropriate Python virtual environment, if applicable. If you are on a
-   RHEL style distribution, you may need to enable a scl environment before
-   starting *emacs*, if it was complied against said environment.
+7. After restarting, you should no longer see startup errors in the *Messsages*
+   buffer or printed to the terminal screen. If you still are having errors with
+   your setup, verify that you are running in an appropriate Python virtual
+   environment, if applicable. If you are on a RHEL style distribution, you may
+   need to enable a scl environment before starting *emacs*, if it was complied
+   against said environment.
 
 ## Sharing your settings across machines
 
@@ -181,14 +203,27 @@ To build *emacs* from source, please see: [BUILD.md](BUILD.md).
 
 Please see: [INSTALLED.md](INSTALLED.md).
 
-# My notes on using emacs as a Python 'IDE'
+# Notes on using emacs as a Python 'IDE'
 
 Please see: [PYTHONENV.md](PYTHONENV.md).
 
 # General emacs environment setup on Linux
 
-Please see: [GENERALENV.md](GENERALENV.md).
+How to get *emacs* and GNU Linux to cooperate most effectively:
+[GENERALENV.md](GENERALENV.md).
+
+# Using emacs as a window manager with exwm
+
+Please see: [EXWM.md](EXWM.md).
 
 # Setting up the programmable Kenesis Advantage II keyboard for emacs
 
 Please see: [KENESIS.md](KENESIS.md).
+
+# Hacks that I have had to do to get some packages working
+
+Please see: [HACKS.md](HACKS.md).
+
+# Things I don't use *emacs* for and bugs I have not solved
+
+Please see: [UNUSED.md](UNUSED.md).

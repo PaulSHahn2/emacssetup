@@ -3,14 +3,17 @@
 This repository has a windows branch that gets updated from time-to-time when I
 need to develop on Windows.
 
+It is loaded automatically when the *init.el* file indicates that we are running
+on Windows. It was last tested with Windows 10 and *emacs 27*.
+
 *emacs* is a second class citizen in this second class OS. You will need to
-install some things to have a chance of getting a full-featured IDE
-running. You can either mess with installing *emacs* as a part of a complete
-Cygwin, Min32 or Windows UNIX toolkit, or you can try the Windows native version
-of *emacs*. I prefer to run *emacs* in the native version. If that doesn't work,
-then I install a virtual machine with a Linux flavor in its
-entirety. Intermediary solutions with toolkit's typically cause more problems
-than they solve, so I avoid them.
+install some things to have a chance of getting a full-featured IDE running. You
+can either mess with installing *emacs* as a part of a complete Cygwin, Min32 or
+Windows UNIX toolkit, or you can try the Windows native version of *emacs*. I
+prefer to run *emacs* in the native version. If that doesn't work, then I
+install a virtual machine with a Linux flavor in its entirety. Intermediary
+solutions with toolkit's typically cause more problems than they solve, so I
+avoid them.
 
 To get a *emacs* Windows native version mostly working:
 
@@ -30,3 +33,7 @@ To get a *emacs* Windows native version mostly working:
 8. Edit *emacs.d/init.el* and remove the comments before *(require setup-windows.el)*
 9. Now start *emacs* and load your packages.
 10. Check your changes in to your windows specific branch.
+
+I would be more cautious about updating *emacs* packages on Windows. *lsp-mode*
+is more fragile. Don't do an update before a major deadline without a backup
+plan.

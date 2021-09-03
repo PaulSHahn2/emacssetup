@@ -38,28 +38,31 @@ changed the functionality by changing the keyboard layer.
 
 The word *layer* came about from the original mechanical type-writers. When you
 pushed the *shift* key it acted as a lever-- physically shifting the
-typewriter's internal mechanism upward and causing a different portion of the
-striker to hit the paper, printing a capital instead of lower case. The first
-mechanical caps-lock keys were ratcheting mechanisms that caught and held the
-layer upward until released by pushing them twice. As typewriters became
-electronic and later computer keyboards, the original nomenclature stuck and
-continued to be used.
+typewriter's internal mechanism upward and causing a different portion (or
+layer) of the striker to hit the paper, printing a capital instead of lower
+case. The first mechanical caps-lock keys were ratcheting mechanisms that caught
+and held the layer upward until released by pushing them twice. As typewriters
+became electronic and later computer keyboards, the original nomenclature stuck
+and continued to be used.
 
 The first computers used keyboards with more modifier keys than we currently
 have. These modifier keys were often larger and easier to reach. They were much
 more ergonomic to use than the the modern "Control" key which requires the use
 of your pinky finger-- a horrible finger from an ergonomic standpoint as it is
-the smallest and most fragile. To contrast this, older computer keyboards had
+the smallest and most fragile. In contrast to this, older computer keyboards had
 modifier keys that were used by pressing the entire side of the users' hand
-against the modifier key to hold it down. This is less stressful and doesn't
-cause the same type of *RSI* damage.
+against the modifier key to hold it down. This was stressful and didn't cause
+the same type of *RSI* damage.
 
 *emacs* in particular was developed on an older system that had a keyboard known
 as the *space cadet* keyboard. It was called this because it had so many
 modifier keys that it looked like some type of control panel that would be used
-at NASA. This is related because it explains why *emacs* evolved to have so many
-key-bindings, which were ok for the user back then-- but not for the user with
-most modern keyboards.
+at NASA. One of these modifier's was called "Meta" and is still used in *emacs*,
+although it is understood to map to "Alt" on modern keyboards.
+
+This trip down memory lane is relevant because it explains why *emacs* evolved
+to have so many key-bindings, which were ok for the user back then-- but not for
+the user with most modern keyboards.
 
 ## What is a macro?
 
@@ -72,8 +75,9 @@ combination which triggers its execution. Normally, typing *c* makes the letter
 "c" appear on the screen of our editor. If we bound a macro to "c", it would
 instead become a shortcut that typed whatever the macro told it to type instead
 of printing the letter *c*. For example, if the programmed macro told it to type
-"Hello", it would output *Hello* instead of *c*. That wouldn't be very usable,
-since we need to type 'c' on occasion.
+"Hello", it would output *Hello* instead of *c*. This example wouldn't be very
+usable, since we need to type 'c' frequently and can still type "Hello" by
+pressing the other associated keys.
 
 Usually macros and lisp functions are bound to a series of keys starting with a
 modifier key. These combinations are called *chords*. For example, *C-x,
@@ -85,6 +89,10 @@ is an *emacs* package to make emacs more useable for users of the *vi/vim*
 editor. Among other things, it provides alternate keybindings that mimic
 *vi/vim*. *vi* users will know that the chorded combination that runs
 *save-buffer* in *evil* mode is *:-w*.
+
+Ergonomically, chords are bad. They tend to cause *RSI*'s. From an efficiency
+standpoint, they are often very good-- if they can be remembered and are easy to
+access. This is a bit of a compromise-- efficiency versus long-term health.
 
 ## How do macros in emacs work?
 
@@ -134,28 +142,38 @@ program that reaches a high level of complexity, see *Blender* for example.
 The traditional *IDE* way to handle this is to have large accordion drop-down
 lists and iconified buttons everywhere-- cluttering up your screen with
 cascading menus. This required you to cycle through the menus with a mouse, or
-to also use hot keys and lots of arrow keys.
+to also use hot keys and lots of arrow keys. Frequently, users forgot where
+items were in the dizzying array of menus.
 
 More modern approaches use a search to just find the command you want to run as
 you type something resembling it into the search window, which is much
-better. *emacs* has supported such *completions* via *i-search since its
+better. *emacs* has supported such *completions* via *i-search* since its
 inception.
 
 The quickest option would be to have more usable keys to bind to so we can have
 simpler to use and easier to remember key combinations, like the first *emacs*
 users had.
 
+Microsoft came up with the great idea to add a new Window's specific modifier
+key back in the day. It had enough clout to get manufactures to add this
+"Windows" key. Unfortunately, Windows itself hogged the key and did little more
+with it than pop up the start menu. Basically, the key is wasted in Windows--
+from a power-user stand-point.
+
+So it is important that these modifiers are not stolen by the OS but available
+directly to the applications we care about, in my case mainly: *emacs*.
+
 ## Rebinding/re-programming keys on the keyboard
 
-We can expand the amount of modifier keys our keyboard has available. We can
-reprogram the keypad layer to bind our macros to the keypad layer's keys. We
-will probably want to stick to the left side of the keypad layer, since the
-right side keys are intended for use as 10-key numerals. The left side keys are
-bound in the keypad layer to the same bindings as they are outside the keypad
-letter, so pressing "a" by default prints a letter "a". These keys are not
-really useful as they are already in the standard layer, and thus we don't need
-to have them available twice. So we can re-bind them. If we don't care about
-10-keying, we can rebind the entire layer if we wish.
+We can expand the amount of modifier keys our keyboard has available with the
+Kenesis. We can reprogram the keypad layer to bind our macros to the keypad
+layer's keys. We will probably want to stick to the left side of the keypad
+layer, since the right side keys are intended for use as 10-key numerals. The
+left side keys are bound in the keypad layer to the same bindings as they are
+outside the keypad letter, so pressing "a" by default prints a letter "a". These
+keys are not really useful as they are already in the standard layer, and thus
+we don't need to have them available twice. So we can re-bind them. If we don't
+care about 10-keying, we can rebind the entire layer if we wish.
 
 I rebind the keypad layer's left side keys to run complex chorded *emacs*
 commands that I don't like remembering or typing over-and-over.
@@ -179,10 +197,10 @@ why bother with binding macros to this keypad layer when it is so awkward to get
 to?
 
 Two reasons: First, you can re-bind an existing key to perform the same action
-as a non-sticky modifer key. Second, can press a foot pedal to access the keypad
-layer as a non-sticky modifier key.
+as a non-sticky modifer key. Second, we can also press a foot pedal to access
+the keypad layer as a non-sticky modifier key.
 
-Xhlee rebinds his end key to toggle the keypad layer directly as a modifier:
+Xah Lee often rebinded his *end* key to toggle the keypad layer directly as a modifier:
 
 ```
 [end]>[kpshift]
@@ -190,7 +208,7 @@ Xhlee rebinds his end key to toggle the keypad layer directly as a modifier:
 
 Now his end key can be used to access the keypad layer by holding it down while
 pressing other keys. He must forgo the use of the *end* key for its more
-traditional purpose.
+traditional purpose if he does this.
 
 His approach means we can now do the following:
 
@@ -224,13 +242,13 @@ wherever the keypad is available, even when we don't have foot-pedals. When the
 keyboard is missing, such as with a laptop-- we still have the original *emacs*
 keybindings to fall back to. We have not reprogrammed them or changed them and
 our *emacs* setting is the same. So our functionality degrades gently and we are
-not left with no way to get things done. Further, we have lost no additional
+not left without a way to get things done. Further, we have lost no additional
 functionality. We can still 10-key if we left the left side keys alone.
 
-The first disadvantage is that we cannot use the right side of the keypad layer for
-new macros, since it is already in use for 10 key. Well, we can-- but we will
-loose the use of it for 10-key purposes. Thus, we have a limited number of keys
-we can bind to.
+The first disadvantage of this approach is that we cannot use the right side of
+the keypad layer for new macros, since it is already in use for 10 key. Well, we
+can-- but we will loose the use of it for 10-key purposes. Thus, we have a
+limited number of keys we can bind to.
 
 Another disadvantage is when we don't have a foot-pedal to trigger the keypad
 layer, we must hit the *keypd* key to turn on the layer, then enter the key
@@ -309,15 +327,16 @@ Below are the commands that are saved to a layout text file on the keyboard to
 program the above macros (read the keyboard owner's manual to see how to do this
 as it can differ between models of Advantage keyboards).
 
-**Note:** I don't use Super short-cuts but call the bound *emacs* function via
-*M-x*. This is because I often run in a virtual machine, and in such cases the
-super modifier is handled by Windows and doesn't get passed to the underlying
-VM client. Calling the functions themselves works everywhere.
+**Note:** I don't use Super short-cuts in my saved macros, but call the bound
+*emacs* function via *M-x*. This is because I often run in a virtual machine,
+and in such cases the super modifier is handled by Windows and doesn't get
+passed to the underlying VM client. Calling the functions themselves works
+everywhere.
 
 ### Manually Rebind windows super to alt
 
 I used to explicitly disable the super key since I liked having two alts for
-two thumbed use on *Cntrl+Alt* key combos:
+two thumbed use on complex *Cntrl+Alt* chords:
 
 ```
 [rwin]>[ralt]
@@ -326,10 +345,9 @@ two thumbed use on *Cntrl+Alt* key combos:
 
 I no longer do this as I found that I try to avoid complex chords that require
 *Cntrl+Alt* anyway, and I can usually press both at the same time with the left
-thumb, if I think to do so.
+thumb, if I can remember to do so.
 
 ### Current default qwerty layout
-
 
 ```
 {kp-a}>{-lctrl}{-lalt}{a}{+lalt}{+lctrl}
@@ -384,8 +402,9 @@ I use this as an alternative when traveling without a foot pedal when
 extensively programming. I have to re-program the keyboard to use this alternate
 layer and forgo the use of *end* for its traditional purposes, then switch the
 keyboard back to the primary layout when I get home or when I want to use the
-end key for its original purpose. This doesn't take long, read the keyboard
-manual section on layers for the details.
+end key for its original purpose. This doesn't take long and gets me closest to
+the best of both worlds, read the keyboard manual section on layers for the
+details.
 
 ```
 [end]>[kpshift]

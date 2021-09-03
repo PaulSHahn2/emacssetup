@@ -8,11 +8,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; flyspell
 (use-package flyspell
-  :ensure t
   :hook ((text-mode . flyspell-mode)
          (prog-mode . flyspell-prog-mode)
          (org-mode . flyspell-mode))
-  )
+)
 
 (use-package flyspell-correct
   :after flyspell
@@ -20,5 +19,7 @@
 
 (use-package flyspell-correct-ivy
   :after flyspell-correct)
+
+(message "setup-spelling complete")
 
 (provide 'setup-spelling)

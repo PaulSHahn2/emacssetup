@@ -1,0 +1,33 @@
+#!/usr/bin/bash
+# Move this file to ~/.xinitrc and set permissions
+
+# lexmark scanner
+/usr/lexscan/bin/demond_nscan &
+
+# we want to setup our default python virtual environment
+source ~/development/environment/python_venvs/general/bin/activate
+
+# we want to tell our emacs init file that we are to act as the window manager
+export XDG_CURRENT_DESKTOP=exwm
+export SSH_ASKPASS=lxqt-openssh-askpass
+export GTK_CSD=0
+export GTK_OVERLAY_SCROLLING=0
+export SAL_USE_VCLPLUGIN=qt5
+export SAL_VCL_QT5_USE_CAIRO=true
+export TERM=/usr/bin/konsole
+
+# set the screen dpi
+xrdb ~/.emacs.d/skel/Xresources
+
+# run a window compositor
+picom &
+
+# run a screen lock, set it up to run when the system blanks screens or suspends
+# super-l will also lock the screen
+xss-lock -- slock &
+
+# start as a client and connect to a new daemon
+#exec dbus-launch --exit-with-session emacsclient -c
+exec dbus-launch --exit-with-session emacs -mm
+# If this doesn't work you can do this instead to debug
+exec dbus-launch --exit-with-session emacs -mm -debug-init

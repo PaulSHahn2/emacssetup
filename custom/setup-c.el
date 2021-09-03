@@ -10,14 +10,10 @@
 ;;(setq lsp-prefer-flymake nil)
 ;;(setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
 (use-package ccls
-  :ensure t
-  :config
-  (setq ccls-executable "ccls")
   :hook ((c-mode c++-mode objc-mode) .
-         (lambda () (require 'ccls) (lsp))))
-
-;; hs-minor-mode for folding source code
-(add-hook 'c-mode-common-hook 'hs-minor-mode)
+         (lambda () (require 'ccls) (lsp)))
+  :config
+  (setq ccls-executable "ccls"))
 
 ;; Available C styles:
 ;; “gnu”: The default style for GNU projects
@@ -35,7 +31,6 @@
 
 ;; company-c-headers
 (use-package company-c-headers
-  :ensure t
   :config
   (add-to-list 'company-backends 'company-c-headers)
   (add-to-list 'company-c-headers-path-system "/usr/include/")
@@ -47,7 +42,6 @@
 ;; Setup a more modern cpp parser for 2014 & 2017 CPP code
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package modern-cpp-font-lock
-  :ensure t
   :diminish modern-c++-font-lock-mode
   :init
   (eval-when-compile
@@ -62,7 +56,6 @@
 ;; cc-mode settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package cc-mode
-  :ensure t
   :defer t
   :init
   (add-to-list 'auto-mode-alist '("\\.tpp\\'" . c++-mode))
@@ -74,34 +67,10 @@
   (custom-set-variables '(c-noise-macro-names '("constexpr")))
   )
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Note: For C++ we use flycheck with LSP mode
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package flycheck
-  :ensure t
-  :diminish flycheck-mode
-  :defer t
-  :init
-  (eval-when-compile
-    ;; Silence missing function warnings
-    ;(;declare-function global-flycheck-mode "flycheck.el"))
-  :config
-  ;; Turn flycheck on everywhere
-  (global-flycheck-mode t)
-  ;; There are issues with company mode and flycheck in terminal mode.
-  ;; This is outlined at:
-  ;; https://github.com/abingham/emacs-ycmd
-  (when (not (display-graphic-p))
-    (setq flycheck-indication-mode nil))
-  )
-  )
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; cmake-mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package cmake-mode
-  :ensure t
   :mode ("CMakeLists.txt" ".cmake")
   :hook (cmake-mode . (lambda ()
                         (add-to-list 'company-backends 'company-cmake)))
@@ -131,12 +100,17 @@
     (use-package bazel-mode
       :mode ("WORKSPACE\\'")
       )
-  )
+)
 
 ;; Add support for C header files as C++ mode
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
+;; hs-minor-mode for folding source code
+(add-hook 'c-mode-common-hook 'hs-minor-mode)
+
 ;; Use as C++ completer if desired. We use the clangd backend
 (add-hook 'c-mode-common-hook 'lsp-mode)
+
+(message "setup-c complete")
 
 (provide 'setup-c)

@@ -3,21 +3,26 @@
 ;; Emacs 26 and newer
 ;;; Code:
 
-(use-package organic-green-theme
-  :ensure t)
+;; I like this one the best, but it
+;; doesn't show rainbow delimiters very well.
+(use-package immaterial-theme)
+
+;; This is really good for org mode
+(use-package leuven-theme)
+
+(use-package organic-green-theme)
+
+(use-package zenburn-theme)
 
 (use-package solarized-theme
-  :ensure t)
+  :config
+  (load-theme 'solarized-dark t))
 
-(use-package leuven-theme
-  :ensure t)
+(use-package smart-mode-line
+  :config
+  (sml/setup)
+)
 
-(use-package zenburn-theme
- :ensure t)
-
-(use-package immaterial-theme
- :ensure t
- :config
- (load-theme 'immaterial-dark t))
+(message "setup-theme complete")
 
 (provide 'setup-theme)

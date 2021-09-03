@@ -36,7 +36,8 @@
 
 ;; json-mode
 (use-package json-mode
-  :ensure t
   :mode ("\\.json\\'" "\\.imp\\'"))
+
+(message "setup-javascript complete")
 
 (provide 'setup-javascript)
